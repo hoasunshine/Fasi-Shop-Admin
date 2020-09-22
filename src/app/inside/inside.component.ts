@@ -13,6 +13,7 @@ export class InsideComponent implements OnInit {
   }
 
   async ngAfterViewInit() {
+    await this.loadScript('../../assets/js/vendor/modernizr-2.8.3.min.js');
     await this.loadScript('../../assets/js/vendor/jquery-2.2.4.min.js');
     await this.loadScript('../../assets/js/popper.min.js');
     await this.loadScript('../../assets/js/bootstrap.min.js');
