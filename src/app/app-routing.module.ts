@@ -5,13 +5,13 @@ import { LoginComponent } from './outside/login/login.component';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
-  { path: 'inside', component: InsideComponent},
-  // {
-  //   path: '',
-  //   loadChildren: () => import('./inside/inside.module').then(m => m.InsideModule),
-  // }
+  // { path: 'inside', component: InsideComponent},
+  {
+    path: '',
+    loadChildren: () => import('./inside/inside.module').then(m => m.InsideModule),
+  }
 ];
 
 @NgModule({

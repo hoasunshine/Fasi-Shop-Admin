@@ -10,25 +10,33 @@
 <div class="login-area">
     <div class="container">
         <div class="login-box ptb--100">
-            <form>
+            <form [formGroup]="loginForm">
                 <div class="login-form-head">
                     <h4>Sign In</h4>
                 </div>
                 <div class="login-form-body">
                     <div class="form-gp">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" id="exampleInputEmail1">
+                        <label>Email address</label>
+                        <input type="email" formControlName="email" required>
                         <i class="ti-email"></i>
-                        <div class="text-danger"></div>
+                        <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
+                            <div *ngIf="loginForm.get('email').errors.required">
+                                Đây là trường bắt buộc phải nhập.
+                            </div>
+                        </div>
                     </div>
                     <div class="form-gp">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" id="exampleInputPassword1">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" required>
                         <i class="ti-lock"></i>
-                        <div class="text-danger"></div>
+                        <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)" class="text-danger">
+                            <div *ngIf="loginForm.get('password').errors.required">
+                                Đây là trường bắt buộc phải nhập.
+                            </div>
+                        </div>
                     </div>
                     <div class="submit-btn-area">
-                        <button id="form_submit" (click)="submit()" type="submit">Submit <i
+                        <button [disabled]="loginForm.invalid" (click)="doLogin()" type="submit">Submit<i
                                 class="ti-arrow-right"></i></button>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiAssService } from 'src/app/service/api-ass.service';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +9,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  formCreated: FormGroup;
-  constructor(private router: Router, private fb: FormBuilder) { }
+  loginForm: FormGroup;
+  constructor(private router: Router, private fb: FormBuilder, private service: ApiAssService) { }
 
   ngOnInit() {
+    this.createForm();
+  }
+
+  createForm () {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   doLogin() {
-    this.router.navigate(['/dashboard']);
+    const data = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+    this.service.doLogin(data);
   }
 
   async ngAfterViewInit() {

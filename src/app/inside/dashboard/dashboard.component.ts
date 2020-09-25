@@ -12,16 +12,4 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  async ngAfterViewInit() {
-    await this.loadScript('../../assets/js/bootstrap.min.js');
-  }
-  loadScript(scriptUrl: string) {
-    return new Promise((resolve, reject) => {
-      const scriptElement = document.createElement('script');
-      scriptElement.src = scriptUrl;
-      scriptElement.onload = resolve;
-      document.body.appendChild(scriptElement);
-    })
-  }
-
 }
