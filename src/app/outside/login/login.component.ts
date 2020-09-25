@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiAssService } from 'src/app/service/api-ass.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private router: Router, private fb: FormBuilder) { }
+  constructor(private router: Router, private fb: FormBuilder, private service: ApiAssService) { }
 
   ngOnInit() {
     this.createForm();
@@ -23,7 +24,11 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin() {
-    alert('1');
+    const data = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+    };
+    this.service.doLogin(data);
   }
 
   async ngAfterViewInit() {

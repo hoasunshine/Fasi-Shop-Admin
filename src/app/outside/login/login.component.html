@@ -19,8 +19,7 @@
                         <label>Email address</label>
                         <input type="email" formControlName="email" required>
                         <i class="ti-email"></i>
-                        <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)"
-                            class="text-danger">
+                        <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
                             <div *ngIf="loginForm.get('email').errors.required">
                                 Đây là trường bắt buộc phải nhập.
                             </div>
@@ -30,8 +29,7 @@
                         <label>Password</label>
                         <input type="password" formControlName="password" required>
                         <i class="ti-lock"></i>
-                        <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)"
-                            class="text-danger">
+                        <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)" class="text-danger">
                             <div *ngIf="loginForm.get('password').errors.required">
                                 Đây là trường bắt buộc phải nhập.
                             </div>

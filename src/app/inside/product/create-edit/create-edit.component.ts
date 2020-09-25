@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-edit',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductCreateEditComponent implements OnInit {
 
-  constructor() { }
+  formCreate: FormGroup;
 
-  ngOnInit() {
+  constructor(private fb: FormBuilder) {
   }
 
+  ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
+    this.formCreate = this.fb.group({
+      categoryId: ['', Validators.required],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required],
+    })
+  }
 }
