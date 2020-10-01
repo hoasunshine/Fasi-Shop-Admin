@@ -25,11 +25,12 @@
                                     Manage
                                 </span></a>
                             <ul class="collapse">
-                                <li><a routerLink="/categories">Categories</a></li>
-                                <li><a routerLink="/products">Products</a></li>
-                                <li><a routerLink="/users">Users</a></li>
+                                <li><a href="/categories">Categories</a></li>
+                                <li><a href="/products">Products</a></li>
+                                <li><a href="/users">Users</a></li>
                             </ul>
-                            <li><a routerLink="/transactions"><i class="ti-shopping-cart"></i> <span>Transactions</span></a></li>
+                            <li><a routerLink="/transactions"><i class="ti-shopping-cart"></i> <span>Transactions</span></a>
+                            </li>
 
                     </ul>
                 </nav>
@@ -50,10 +51,7 @@
                         <span></span>
                     </div>
                     <div class="search-box pull-left">
-                        <form action="#">
-                            <input type="text" name="search" placeholder="Search..." required>
-                            <i class="ti-search"></i>
-                        </form>
+
                     </div>
                 </div>
                 <!-- profile info & task notification -->
@@ -200,6 +198,14 @@
                         </li>
                         <li class="settings-btn">
                             <i class="ti-settings"></i>
+                        </li>
+                        <li>
+                            <img class="avatar user-thumb dropdown-toggle" data-toggle="dropdown" src="assets/images/author/avatar.png" alt="avatar">
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Message</a>
+                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="#">Log Out</a>
+                            </div>
                         </li>
                     </ul>
                 </div>

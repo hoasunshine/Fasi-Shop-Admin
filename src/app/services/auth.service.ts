@@ -1,14 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { error } from 'console';
 import { Login } from 'src/model/login';
-import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiAssService {
+export class AuthService {
 
   private loginUrl = 'http://localhost:8080/accounts/login'
 
@@ -23,7 +21,7 @@ export class ApiAssService {
         console.log(item);
         this.router.navigate(['/dashboard']);
       }, (error) => console.log("",
-      error))
+        error))
     })
   }
 }

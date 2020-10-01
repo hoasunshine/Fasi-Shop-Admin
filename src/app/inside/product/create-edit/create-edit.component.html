@@ -6,20 +6,18 @@
                 <div class="breadcrumbs-area clearfix">
                     <h4 class="page-title pull-left">Dashboard</h4>
                     <ul class="breadcrumbs pull-left">
-                        <li><a [routerLink]="['/dashboard']">Home</a></li>
-                        <li><a [routerLink]="['/products']">Product</a></li>
+                        <li><a href="/dashboard">Home</a></li>
+                        <li><a href="/products">Product</a></li>
                         <li><span>Create</span></li>
                     </ul>
                 </div>
             </div>
             <div class="col-sm-6 clearfix">
                 <div class="user-profile pull-right">
-                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i></h4>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Message</a>
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Log Out</a>
+                    <div class="search-box pull-left">
+                        <form action="#">
+                            <div style="height: 40px;"> </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -39,14 +37,14 @@
                             <div class="form-group">
                                 <label>Category</label>
                                 <select class="custom-select" formControlName="categoryId" required>
-                                    <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option selected disabled value="">Choose category...</option>
+                                    <option [value]="item.categoryId" *ngFor="let item of categoryData">
+                                        {{item.categoryName}}
+                                      </option>
                                 </select>
                                 <div *ngIf="formCreate.get('categoryId').invalid && (formCreate.get('categoryId').dirty || formCreate.get('categoryId').touched)" class="text-danger">
                                     <div *ngIf="formCreate.get('categoryId').errors.required">
-                                        Đây là trường bắt buộc phải chọn.
+                                        Content is required.
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +53,7 @@
                                 <input type="text" class="form-control" formControlName="name" required>
                                 <div *ngIf="formCreate.get('name').invalid && (formCreate.get('name').dirty || formCreate.get('name').touched)" class="text-danger">
                                     <div *ngIf="formCreate.get('name').errors.required">
-                                        Đây là trường bắt buộc phải nhập.
+                                        Content is required.
                                     </div>
                                 </div>
                             </div>
@@ -64,32 +62,49 @@
                                 <textarea class="form-control" cols="10" rows="5" formControlName="description" required></textarea>
                                 <div *ngIf="formCreate.get('description').invalid && (formCreate.get('description').dirty || formCreate.get('description').touched)" class="text-danger">
                                     <div *ngIf="formCreate.get('description').errors.required">
-                                        Đây là trường bắt buộc phải nhập.
+                                        Content is required.
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" min="0" class="form-control" formControlName="price" required>
+                                <input type="number" min="0" oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" formControlName="price" required>
                                 <div *ngIf="formCreate.get('price').invalid && (formCreate.get('price').dirty || formCreate.get('price').touched)" class="text-danger">
                                     <div *ngIf="formCreate.get('price').errors.required">
-                                        Đây là trường bắt buộc phải nhập.
+                                        This is a required field.
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Thumbnail</label>
                                 <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <button class="btn btn-add">
-                                            <i class="fa fa-plus-circle"></i>
-                                            Upload
-                                        </button>
+                                    <div class="input col-md-12">
+                                        <ngx-dropzone (change)="onSelect($event)" accept=".png, .jpg ,.mp4">
+                                            <ngx-dropzone-label class="btn btn-add"><i class="fa fa-upload"></i> &nbsp; Upload
+                                            </ngx-dropzone-label>
+                                        </ngx-dropzone>
                                     </div>
                                 </div>
+                                <div *ngIf="sttLoading">
+                                    <div *ngIf="progressValueFile | async as val">
+                                        <progress type="warning" [value]="val" style="height: 7mm; width: 50%" max="100"></progress>
+                                        <br />
+                                        <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}%
+                                        </span><span *ngIf="val == 100" style="color:rgb(1, 153, 34);  font-size: 17px; font-weight: 410;">Completed
+                                            !</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <ngx-dropzone-preview *ngFor="let url of urls" [removable]="true" (removed)="onRemove(url)">
+                                        <ngx-dropzone-label>
+                                            <img width="100%" src="{{url}}" alt="">
+                                        </ngx-dropzone-label>
+                                    </ngx-dropzone-preview>
+                                </div>
                             </div>
+
                             <div class="text-right">
-                                <button type="submit" [disabled]="formCreate.invalid" class="btn btn-create-add">
+                                <button type="submit" (click)="createProduct()" [disabled]="formCreate.invalid" class="btn btn-create-add">
                                     <h4 class="button-name">
                                         Create
                                     </h4>
