@@ -10,16 +10,22 @@ import { ProductCreateEditComponent } from './product/create-edit/create-edit.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { InsideRoutingModule } from './inside-routing.module';
+import { InsideComponent } from './inside.component';
 
 
 @NgModule({
-  declarations: [DashboardComponent,
+  declarations: [
+    InsideComponent,
+    DashboardComponent,
     CategoryComponent,
     ProductComponent,
     TransactionComponent,
     UserComponent,
     CategoryCreateEditComponent,
     ProductCreateEditComponent
+  ],
+  exports:[
+    InsideComponent
   ],
   imports: [
     CommonModule,

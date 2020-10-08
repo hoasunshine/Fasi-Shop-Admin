@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from 'src/model/category';
+import { Product } from 'src/model/product';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,13 @@ export class InsideService {
 
   getProductData() {
     return this.http.get(this.productUrl);
+  }
+
+  addProduct(product: Product) {
+    const obj = JSON.stringify(product);
+    return this.http.post(this.productUrl, obj, {
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
 
   deleteProduct(id) {

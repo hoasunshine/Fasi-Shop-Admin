@@ -14,6 +14,7 @@ const routes: Routes = [
     path: '',
     component: InsideComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
         component: DashboardComponent

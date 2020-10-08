@@ -1,3 +1,12 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
 <div id="formCreate">
     <!-- page title area start -->
     <div class="page-title-area">
@@ -40,7 +49,7 @@
                                     <option selected disabled value="">Choose category...</option>
                                     <option [value]="item.categoryId" *ngFor="let item of categoryData">
                                         {{item.categoryName}}
-                                      </option>
+                                    </option>
                                 </select>
                                 <div *ngIf="formCreate.get('categoryId').invalid && (formCreate.get('categoryId').dirty || formCreate.get('categoryId').touched)" class="text-danger">
                                     <div *ngIf="formCreate.get('categoryId').errors.required">
@@ -102,7 +111,27 @@
                                     </ngx-dropzone-preview>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div class="row">
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="radio" id="active" name="status" value="Active" formControlName="status">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" readonly value="Active">
+                                    </div>
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="radio" id="deactive" name="status" value="Deactive" formControlName="status">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" readonly value="Deactive">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="text-right">
                                 <button type="submit" (click)="createProduct()" [disabled]="formCreate.invalid" class="btn btn-create-add">
                                     <h4 class="button-name">
