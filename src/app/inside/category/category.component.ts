@@ -11,7 +11,7 @@ export class CategoryComponent implements OnInit {
   sttAdd: boolean = true;
   sttNotifi: boolean = false;
   sttTextNotifi = 'toast-success';
-  sttLoading: boolean = false;
+  sttLoading = false;
   textNotifi: string;
   constructor(private service: InsideService) { }
 

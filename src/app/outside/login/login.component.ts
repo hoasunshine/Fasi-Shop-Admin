@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,6 +10,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  sttAdd: boolean = true;
+  sttNotifi = false;
+  sttTextNotifi = 'toast-success';
+  sttLoading: boolean = false;
+  textNotifi: string;
+
   constructor(private router: Router, private fb: FormBuilder, private service: AuthService) { }
 
   ngOnInit() {
@@ -22,12 +29,27 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  dismissToast() {
+    this.sttNotifi = false;
+  }
+
   doLogin() {
     const data = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this.service.doLogin(data);
+    this.service.doLogin(data).then(() => {
+      window.location.href = "/dashboard";
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = "ggg";
+        this.sttTextNotifi = 'toast-success';
+    }).catch(error => {
+      this.sttLoading = false;
+      this.sttNotifi = true;
+      this.textNotifi = "!!!";
+      this.sttTextNotifi = 'toast-error';
+    })
   }
 
   async ngAfterViewInit() {

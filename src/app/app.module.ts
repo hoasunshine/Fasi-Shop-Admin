@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './outside/login/login.component';
-import { InsideComponent } from './inside/inside.component';
 import { InsideRoutingModule } from './inside/inside-routing.module';
 import { InsideModule } from './inside/inside.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,8 +18,7 @@ import { AuthService } from './services/auth.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    InsideComponent,
+    LoginComponent,    
   ],
   imports: [
     BrowserModule,

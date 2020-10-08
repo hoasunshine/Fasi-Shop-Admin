@@ -20,8 +20,12 @@ export class ProductCreateEditComponent implements OnInit {
   url: string;
   fileName: string;
   sttLoading = false;
+  sttNotifi: boolean = false;
+  sttTextNotifi = 'toast-success';
+  textNotifi: string;
 
-  productData: any = [];
+  productData = [];
+  categoryData = [];
 
   constructor(private fb: FormBuilder, private service: InsideService,
     private http: HttpClient, private storage: AngularFireStorage) {
@@ -38,17 +42,50 @@ export class ProductCreateEditComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
+      status: ['Active'],
     })
   }
 
   getDataClient() {
-    this.service.getCategoryData().subscribe(data => {
+    this.service.getProductData().subscribe(data => {
       this.productData = data['data'];
     });
+    this.service.getCategoryData().subscribe(data => {
+      this.categoryData = data['data'];
+    })
   }
 
   createProduct() {
-    console.log(this.formCreate.value.categoryId);
+    const data = {
+      accountId: window.localStorage.getItem('id'),
+      productId: '',
+      categoryId: this.formCreate.value.categoryId,
+      productName: this.formCreate.value.name,
+      productPrice: this.formCreate.value.price,
+      description: this.formCreate.value.description,
+      status: this.formCreate.value.status,
+      imageProduct: this.urls,
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
+      deletedAt: 0,
+    }
+    this.service.addProduct(data).subscribe(
+      response => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = 'Created Successfully!';
+        this.sttTextNotifi = 'toast-success';
+        window.location.href = '/products';
+      },
+      error => {
+        console.log(error);
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        this.textNotifi = error.msg;
+        this.sttTextNotifi = 'toast-error';
+      },
+    )
+    
   }
 
   onRemove(event) {
