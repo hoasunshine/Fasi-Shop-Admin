@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { InsideRoutingModule } from './inside-routing.module';
 import { InsideComponent } from './inside.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { InsideComponent } from './inside.component';
     ReactiveFormsModule,
     FormsModule,
     NgxDropzoneModule,
+    NgxPaginationModule,
   ]
 })
 export class InsideModule { }

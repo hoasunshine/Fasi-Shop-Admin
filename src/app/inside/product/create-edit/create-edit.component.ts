@@ -5,6 +5,8 @@ import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { DataProducts } from 'src/model/dataProducts';
+import { Images } from 'src/model/images';
 
 
 @Component({
@@ -15,17 +17,19 @@ export class ProductCreateEditComponent implements OnInit {
 
   formCreate: FormGroup;
   urls = [];
+  datas: DataProducts = new DataProducts;
   downloadURL: Observable<string>;
   progressValue: Observable<number>;
   url: string;
   fileName: string;
   sttLoading = false;
-  sttNotifi: boolean = false;
+  sttNotifi = false;
   sttTextNotifi = 'toast-success';
   textNotifi: string;
-
+  images: Images[];
   productData = [];
   categoryData = [];
+  id: string;
 
   constructor(private fb: FormBuilder, private service: InsideService,
     private http: HttpClient, private storage: AngularFireStorage) {
@@ -34,6 +38,7 @@ export class ProductCreateEditComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.getDataClient();
+    this.getDataUpdate();
   }
 
   createForm() {
@@ -42,8 +47,19 @@ export class ProductCreateEditComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
+      amount: ['', Validators.required],
       status: ['Active'],
     })
+  }
+
+  getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
   getDataClient() {
@@ -51,8 +67,13 @@ export class ProductCreateEditComponent implements OnInit {
       this.productData = data['data'];
     });
     this.service.getCategoryData().subscribe(data => {
-      this.categoryData = data['data'];
+      this.categoryData = data['data']['list'];
     })
+  }
+
+  getDataUpdate() {
+    var url = window.location.href;
+    this.id = this.getParameterByName('id', url);
   }
 
   createProduct() {
@@ -64,28 +85,38 @@ export class ProductCreateEditComponent implements OnInit {
       productPrice: this.formCreate.value.price,
       description: this.formCreate.value.description,
       status: this.formCreate.value.status,
-      imageProduct: this.urls,
+      imageProduct: '123',
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
       deletedAt: 0,
     }
-    this.service.addProduct(data).subscribe(
+    console.log(data);
+    this.datas.product = data;
+    this.datas.totalProducts = this.formCreate.value.amount;
+    this.datas.imageList = this.images;
+    console.log(this.datas);
+    this.service.addProduct(this.datas).subscribe(
       response => {
         this.sttLoading = false;
         this.sttNotifi = true;
+        setTimeout(() => {
+          this.sttNotifi = false;
+        }, 5000);
         this.textNotifi = 'Created Successfully!';
         this.sttTextNotifi = 'toast-success';
         window.location.href = '/products';
       },
       error => {
-        console.log(error);
         this.sttLoading = false;
         this.sttNotifi = true;
-        this.textNotifi = error.msg;
+        setTimeout(() => {
+          this.sttNotifi = false;
+        }, 5000);
+        this.textNotifi = error.message;
         this.sttTextNotifi = 'toast-error';
       },
     )
-    
+
   }
 
   onRemove(event) {
@@ -114,6 +145,10 @@ export class ProductCreateEditComponent implements OnInit {
           this.downloadURL = fileRef.getDownloadURL();
           this.downloadURL.subscribe((url) => {
             if (url) {
+              this.images = [];
+              let image = new Images();
+              image.url = url
+              this.images.push(image)
               this.urls.push(url);
               console.log(this.urls);
               this.sttLoading = false;

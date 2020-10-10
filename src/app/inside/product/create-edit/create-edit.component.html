@@ -85,6 +85,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label>Amount</label>
+                                <input type="number" min="0" oninput="this.value =!!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" class="form-control" formControlName="amount" required>
+                                <div *ngIf="formCreate.get('amount').invalid && (formCreate.get('amount').dirty || formCreate.get('amount').touched)" class="text-danger">
+                                    <div *ngIf="formCreate.get('amount').errors.required">
+                                        This is a required field.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Avatar</label>
+                            </div>
+                            <div class="form-group">
                                 <label>Thumbnail</label>
                                 <div class="row align-items-center">
                                     <div class="input col-md-12">

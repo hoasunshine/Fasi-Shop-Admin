@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "adminprojectsem4": {
+      "hosting": {
+        "AdminSunShop": [
+          "adminprojectsem4"
+        ]
+      }
+    }
+  }
+}

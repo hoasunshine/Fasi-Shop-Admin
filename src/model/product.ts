@@ -4,7 +4,7 @@ export class Product {
     productPrice: Number;
     accountId: string;
     description: string;
-    imageProduct: string[];
+    imageProduct: string;
     status: string;
     createdAt: number;
     updatedAt: number;
