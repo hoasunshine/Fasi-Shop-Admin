@@ -20,9 +20,9 @@ export class CategoryComponent implements OnInit {
   }
 
   getDataClient() {
-    this.service.getCategoryData().subscribe(data => {
-      this.categoryDataList = data['data'];
-      this.categoryDataListPer = data['data'];
+    this.service.getCategoryData().subscribe(data => {      
+      this.categoryDataList = data['data']['list'];
+      this.categoryDataListPer = data['data']['list'];
     });
   }
 
@@ -45,7 +45,7 @@ export class CategoryComponent implements OnInit {
       this.sttNotifi = true;
       setTimeout( () => {
         this.sttNotifi = false;
-      }, 2000);
+      }, 5000);
       this.textNotifi = 'No category data!';
       this.sttTextNotifi = 'toast-error';
     } else {
@@ -60,15 +60,20 @@ export class CategoryComponent implements OnInit {
         response => {
           this.sttLoading = false;
           this.sttNotifi = true;
+          setTimeout( () => {
+            this.sttNotifi = false;
+          }, 5000);
           this.textNotifi = 'Deactive successfully!';
           this.sttTextNotifi = 'toast-success';
           window.location.reload();
         },
         error => {
-          console.log(error);
           this.sttLoading = false;
           this.sttNotifi = true;
-          this.textNotifi = error.msg;
+          setTimeout( () => {
+            this.sttNotifi = false;
+          }, 5000);
+          this.textNotifi = error.message;
           this.sttTextNotifi = 'toast-error';
         },
       )

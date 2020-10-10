@@ -24,7 +24,7 @@
                 <div class="user-profile pull-right">
                     <div class="search-box pull-left">
                         <form action="#">
-                            <input type="text" name="search" placeholder="Search...">
+                            <input type="text" name="search" placeholder="Search..." (input)="search($event.target.value)">
                             <i class="ti-search"></i>
                         </form>
                     </div>
@@ -36,54 +36,82 @@
     <div class="main-content-inner">
         <div class="row">
             <!-- Progress Table start -->
+
             <div class="col-12 mt-5">
-                <a href="/product/create-edit">
-                    <button type="button" class="btn btn-add">
-                        <i class="fa fa-plus-circle"></i>
-                        Create
-                    </button>
-                </a>
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <a href="/product/create-edit">
+                            <button type="button" class="btn btn-add">
+                                <i class="fa fa-plus-circle"></i>
+                                Create
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <div class="dropdown ">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                                    Dropdown button
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Progress Table</h4>
+                        <h4 class="header-title">Product Table</h4>
                         <div class="single-table">
                             <div class="table-responsive">
                                 <table class="table table-hover progress-table text-center">
                                     <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">Created At</th>
-                                            <th scope="col">Updated At</th>
+                                            <th scope="col">Created At <i (click)="sortBy($event, 'timeCre')" class="fa fa-arrow-down"></i></th>
+                                            <th scope="col">Updated At <i (click)="sortBy($event, 'timeUp')" class="fa fa-arrow-down"></i></th>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let item of productDataList, let i = index">
+                                        <tr *ngFor="let item of productDataList| paginate: { itemsPerPage: 20, currentPage: p, id: id  }
+                                            , let i = index">
                                             <th scope="row">{{i + 1}}</th>
-                                            <td>{{item.createdAt}}</td>
                                             <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
+                                            <td>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
                                             <td>{{item.productName}}</td>
+                                            <td>{{item.category.categoryName}}</td>
                                             <td>{{item.description}}</td>
-                                            <td *ngIf="item.status === 'Active'"><span class="status-p bg-success">Active</span></td>
-                                            <td *ngIf="item.status === 'Deactive'"><span class="status-p bg-secondary">DeActive</span></td>
-                                            <td *ngIf="item.status === 'Deleted'"><span class="status-p bg-danger">Deleted</span></td>
+                                            <td *ngIf="item.status==='Active'"><span class=" status-p bg-success">Active</span></td>
+                                            <td *ngIf="item.status==='Deactive'"><span class="status-p bg-secondary">DeActive</span></td>
+                                            <td *ngIf="item.status==='Deleted'"><span class="status-p bg-danger">Deleted</span></td>
                                             <td>
                                                 <ul class="d-flex justify-content-center">
-                                                    <li class="mr-3">
+                                                    <li class=" mr-3 ">
                                                         <a [routerLink]="['/product/create-edit']" [queryParams]="{id: item.productId}" class="text-secondary">
-                                                            <i class="fa fa-edit"></i>
+                                                            <i class=" fa fa-edit "></i>
                                                         </a>
                                                     </li>
-                                                    <li *ngIf="item.status !== 'Deactive'"><a (click)="deleteProduct(item.productId)" class="text-danger"><i class="ti-trash"></i></a>
+                                                    <li *ngIf="item.status!=='Deactive'">
+                                                        <a (click)="deleteProduct(item.productId)" class="text-danger">
+                                                            <i class=" ti-trash "></i>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls maxSize=" 5 " *ngIf=" productDataList.length>25" style="text-align: right" [id]="id" (pageChange)="p = $event">
+                                </pagination-controls>
                             </div>
                         </div>
                     </div>

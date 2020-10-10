@@ -72,6 +72,9 @@ export class CategoryCreateEditComponent implements OnInit {
       response => {
         this.sttLoading = false;
         this.sttNotifi = true;
+        setTimeout( () => {
+          this.sttNotifi = false;
+        }, 5000);
         this.textNotifi = 'Created Successfully!';
         this.sttTextNotifi = 'toast-success';
         window.location.href = '/categories';
@@ -80,7 +83,10 @@ export class CategoryCreateEditComponent implements OnInit {
         console.log(error);
         this.sttLoading = false;
         this.sttNotifi = true;
-        this.textNotifi = error.msg;
+        setTimeout( () => {
+          this.sttNotifi = false;
+        }, 5000);
+        this.textNotifi = error.messge;
         this.sttTextNotifi = 'toast-error';
       },
     )
