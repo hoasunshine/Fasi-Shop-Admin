@@ -18,11 +18,14 @@ export class ProductCreateEditComponent implements OnInit {
   formCreate: FormGroup;
   urls = [];
   datas: DataProducts = new DataProducts;
+  downloadURLThumbnail: Observable<string>;
   downloadURL: Observable<string>;
   progressValue: Observable<number>;
+  progressValueThumbnail: Observable<number>;
   url: string;
   fileName: string;
   sttLoading = false;
+  sttLoadingProgress = false;
   sttNotifi = false;
   sttTextNotifi = 'toast-success';
   textNotifi: string;
@@ -30,6 +33,7 @@ export class ProductCreateEditComponent implements OnInit {
   productData = [];
   categoryData = [];
   id: string;
+  thumbnail: string;
 
   constructor(private fb: FormBuilder, private service: InsideService,
     private http: HttpClient, private storage: AngularFireStorage) {
@@ -85,12 +89,11 @@ export class ProductCreateEditComponent implements OnInit {
       productPrice: this.formCreate.value.price,
       description: this.formCreate.value.description,
       status: this.formCreate.value.status,
-      imageProduct: '123',
+      imageProduct: this.thumbnail,
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
       deletedAt: 0,
     }
-    console.log(data);
     this.datas.product = data;
     this.datas.totalProducts = this.formCreate.value.amount;
     this.datas.imageList = this.images;
@@ -119,12 +122,34 @@ export class ProductCreateEditComponent implements OnInit {
 
   }
 
+  uploadThumbnail(event) {
+    var n = event.target.files[0].name;
+    const filePath = `RoomsImages/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, event.target.files[0]);
+    this.sttLoadingProgress = true;
+    this.progressValueThumbnail = task.percentageChanges();
+    task.snapshotChanges().pipe(finalize(() => {
+      this.downloadURLThumbnail = fileRef.getDownloadURL();
+      this.downloadURLThumbnail.subscribe((url) => {
+        if (url) {
+          this.thumbnail = url;
+          this.sttLoadingProgress = false;
+        }
+      })
+    })).subscribe(url => {
+      if (url) {
+        console.log('url');
+      }
+    })
+  }
+
   onRemove(event) {
     this.urls.splice(this.urls.indexOf(event), 1);
   }
 
   onSelect(event) {
-    let files = event.addedFiles
+    let files = event.addedFiles;
     for (let i = 0; i < files.length; i++) {
       this.fileName = files[i].name;
       this.uploadFile(files[i]);
@@ -136,7 +161,7 @@ export class ProductCreateEditComponent implements OnInit {
     const filePath = `RoomsImages/${n}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
-    this.sttLoading = true;
+    this.sttLoadingProgress = true;
     this.progressValue = task.percentageChanges();
     task
       .snapshotChanges()
@@ -150,15 +175,14 @@ export class ProductCreateEditComponent implements OnInit {
               image.url = url
               this.images.push(image)
               this.urls.push(url);
-              console.log(this.urls);
-              this.sttLoading = false;
+              this.sttLoadingProgress = false;
             }
           });
         })
       )
       .subscribe(url => {
         if (url) {
-          console.log(url);
+          console.log('url');
         }
       });
   }

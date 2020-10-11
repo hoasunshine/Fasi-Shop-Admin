@@ -94,10 +94,31 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Avatar</label>
+                                <label>Thumbnail</label>
+                                <div class="btn-upload-thumbnail">
+                                    <input type="file" (change)="uploadThumbnail($event)" accept=".png,.jpg" class="upload-input">
+                                    <!-- <button class="btn btn-add">
+                                        <i class="fa fa-upload"></i> &nbsp;
+                                        Upload
+                                    </button> -->
+                                </div>
+                                <div *ngIf="sttLoadingProgress">
+                                    <div *ngIf="progressValueThumbnail | async as val">
+                                        <progress type="warning" [value]="val" style="height: 7mm; width: 50%" max="100"></progress>
+                                        <br />
+                                        <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}%
+                                        </span><span *ngIf="val == 100" style="color:rgb(1, 153, 34);  font-size: 17px; font-weight: 410;">Completed
+                                            !</span>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="this.thumbnail !== null && this.thumbnail !== undefined && this.thumbnail !== ''">
+                                    <div class="display-thumbnail">
+                                        <img width="100%" src="{{this.thumbnail}}" alt="">
+                                    </div>
+                                </ng-container>
                             </div>
                             <div class="form-group">
-                                <label>Thumbnail</label>
+                                <label>List Image</label>
                                 <div class="row align-items-center">
                                     <div class="input col-md-12">
                                         <ngx-dropzone (change)="onSelect($event)" accept=".png, .jpg ,.mp4">
@@ -106,8 +127,8 @@
                                         </ngx-dropzone>
                                     </div>
                                 </div>
-                                <div *ngIf="sttLoading">
-                                    <div *ngIf="progressValueFile | async as val">
+                                <div *ngIf="sttLoadingProgress">
+                                    <div *ngIf="progressValue | async as val">
                                         <progress type="warning" [value]="val" style="height: 7mm; width: 50%" max="100"></progress>
                                         <br />
                                         <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}%
