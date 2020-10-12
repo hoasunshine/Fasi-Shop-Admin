@@ -1,6 +1,5 @@
 export class Product {
     categoryId: string;
-    productId: string;
     productPrice: Number;
     accountId: string;
     description: string;

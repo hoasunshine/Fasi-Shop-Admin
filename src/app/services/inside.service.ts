@@ -12,6 +12,8 @@ export class InsideService {
   private categoryUrl = 'http://localhost:8080/categories';
   private productUrl = 'http://localhost:8080/products';
   private orderUrl = 'http://localhost:8080/order';
+  private productAmountUrl = 'http://localhost:8080/warehouse';
+  private productImageListUrl = 'http://localhost:8080/products/listImage';
 
   constructor(private http: HttpClient) { }
 
@@ -47,21 +49,29 @@ export class InsideService {
     return this.http.get(this.productUrl);
   }
 
-  addProduct(data:DataProducts) {
+  getProductAmountByProductId(id) {
+    return this.http.get(`${this.productAmountUrl}/${id}`);
+  }
+
+  getProductImageListByProductId(id) {
+    return this.http.get(`${this.productImageListUrl}/${id}`);
+  }
+
+  addProduct(data: DataProducts) {
     const obj = JSON.stringify(data);
     return this.http.post(this.productUrl, obj, {
-      headers: { 'Content-Type': 'application/json' }
-    })
+      headers: {'Content-Type': 'application/json'}
+    });
   }
 
   getDetailProduct(id) {
-    return this.http.get(`${this.productUrl}/${id}`)
+    return this.http.get(`${this.productUrl}/${id}`);
   }
 
-  updateProduct(product: Product, id: string) {
-    const obj = JSON.stringify(product);
+  updateProduct(data: DataProducts, id: string) {
+    const obj = JSON.stringify(data);
     return this.http.put(`${this.productUrl}/${id}`, obj, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: {'Content-Type': 'application/json'}
     });
   }
 
