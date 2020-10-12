@@ -78,6 +78,14 @@ export class ProductCreateEditComponent implements OnInit {
   getDataUpdate() {
     var url = window.location.href;
     this.id = this.getParameterByName('id', url);
+    if (this.id !== null && this.id !== undefined) {
+      this.service.getDetailProduct(this.id).subscribe(data => {
+        console.log(data);
+        
+        const objCreated = [];
+        // objCreated['categoryId'] = 
+      })
+    }
   }
 
   createProduct() {
@@ -97,7 +105,6 @@ export class ProductCreateEditComponent implements OnInit {
     this.datas.product = data;
     this.datas.totalProducts = this.formCreate.value.amount;
     this.datas.imageList = this.images;
-    console.log(this.datas);
     this.service.addProduct(this.datas).subscribe(
       response => {
         this.sttLoading = false;

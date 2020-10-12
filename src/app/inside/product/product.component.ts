@@ -29,6 +29,10 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  dismissToast() {
+    this.sttNotifi = false;
+  }
+
   search(val: any) {
     const arr = [];
     const data = this.productDataListPer;

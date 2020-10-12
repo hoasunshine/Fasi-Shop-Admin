@@ -95,7 +95,7 @@
                                             <td *ngIf="item.status==='Deleted'"><span class="status-p bg-danger">Deleted</span></td>
                                             <td>
                                                 <ul class="d-flex justify-content-center">
-                                                    <li class=" mr-3 ">
+                                                    <li class="mr-3">
                                                         <a [routerLink]="['/product/create-edit']" [queryParams]="{id: item.productId}" class="text-secondary">
                                                             <i class=" fa fa-edit "></i>
                                                         </a>
@@ -110,7 +110,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <pagination-controls maxSize=" 5 " *ngIf=" productDataList.length>25" style="text-align: right" [id]="id" (pageChange)="p = $event">
+                                <pagination-controls maxSize="5" *ngIf="productDataList.length > 25" style="text-align: right" [id]="id" (pageChange)="p = $event">
                                 </pagination-controls>
                             </div>
                         </div>

@@ -10,4 +10,15 @@ export class InsideComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  logOut() {
+    const confirmed = window.confirm('Do you want to logout?');
+    if (confirmed) {
+      window.localStorage.clear();
+      window.localStorage.removeItem('lastLogin');
+      window.localStorage.removeItem('timeExpired');
+      console.log('Clear successfully!!!');
+      window.location.href = '/login';
+    }
+  }
 }
