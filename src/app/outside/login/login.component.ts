@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.createForm();
   }
 
-  createForm () {
+  createForm() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -33,23 +33,30 @@ export class LoginComponent implements OnInit {
     this.sttNotifi = false;
   }
 
-  doLogin() {
+  async doLogin() {
     const data = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this.service.doLogin(data).then(() => {
-      window.location.href = "/dashboard";
-        this.sttLoading = false;
-        this.sttNotifi = true;
-        this.textNotifi = "ggg";
-        this.sttTextNotifi = 'toast-success';
-    }).catch(error => {
+    await this.service.doLogin(data);
+    if (window.localStorage.getItem('role') === 'Admin') {
       this.sttLoading = false;
       this.sttNotifi = true;
-      this.textNotifi = "!!!";
+      setTimeout(() => {
+        this.sttNotifi = false;
+      }, 5000);
+      this.textNotifi = 'Verified!';
+      this.sttTextNotifi = 'toast-success';
+      window.location.href = '/dashboard';
+    } else {
+      this.sttLoading = false;
+      this.sttNotifi = true;
+      setTimeout(() => {
+        this.sttNotifi = false;
+      }, 5000);
+      this.textNotifi = 'Not permission!!!';
       this.sttTextNotifi = 'toast-error';
-    })
+    }
   }
 
   async ngAfterViewInit() {

@@ -72,6 +72,6 @@ export class InsideService {
   //Transaction
 
   getAllTransaction() {
-
+    return this.http.get(this.orderUrl);
   }
 }

@@ -45,7 +45,7 @@ export class CategoryCreateEditComponent implements OnInit {
   getDataUpdate() {
     var url = window.location.href;
     this.id = this.getParameterByName('id', url);
-    if (this.id !== null || this.id !== undefined) {
+    if (this.id !== null && this.id !== undefined) {
       this.service.getDetailCategory(this.id).subscribe(data => {        
         const objCreated = [];                
         objCreated['name'] = data['data'].categoryName;
