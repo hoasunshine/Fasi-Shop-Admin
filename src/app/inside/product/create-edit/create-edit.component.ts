@@ -24,6 +24,7 @@ export class ProductCreateEditComponent implements OnInit {
   progressValueThumbnail: Observable<number>;
   url: string;
   fileName: string;
+  sttAdd = true;
   sttLoading = false;
   sttLoadingProgress = false;
   sttNotifi = false;
@@ -79,19 +80,31 @@ export class ProductCreateEditComponent implements OnInit {
     var url = window.location.href;
     this.id = this.getParameterByName('id', url);
     if (this.id !== null && this.id !== undefined) {
+      this.service.getProductImageListByProductId(this.id).subscribe(data2 => {
+        for (let i = 0; i < data2['imageDTOS'].length; i++) {
+          this.urls.push(data2['imageDTOS'][i].url);
+        }
+      });
       this.service.getDetailProduct(this.id).subscribe(data => {
-        console.log(data);
-        
-        const objCreated = [];
-        // objCreated['categoryId'] = 
-      })
+        this.service.getProductAmountByProductId(this.id).subscribe(data1 => {
+          const objCreated = [];
+          objCreated['categoryId'] = data['data']['category']['categoryId'];
+          objCreated['name'] = data['data']['productName'];
+          objCreated['description'] = data['data']['description'];
+          objCreated['price'] = data['data']['productPrice'];
+          objCreated['amount'] = data1['data']['totalProduct'];
+          objCreated['status'] = data['data']['status'];
+          this.thumbnail = data['data']['imageProduct'];
+          this.formCreate = this.fb.group(objCreated);
+          this.sttAdd = false;
+        });
+      });
     }
   }
 
   createProduct() {
     const data = {
       accountId: window.localStorage.getItem('id'),
-      productId: '',
       categoryId: this.formCreate.value.categoryId,
       productName: this.formCreate.value.name,
       productPrice: this.formCreate.value.price,
@@ -126,7 +139,45 @@ export class ProductCreateEditComponent implements OnInit {
         this.sttTextNotifi = 'toast-error';
       },
     )
+  }
 
+  updateProduct() {
+    const data = {
+      accountId: window.localStorage.getItem('id'),
+      categoryId: this.formCreate.value.categoryId,
+      productName: this.formCreate.value.name,
+      productPrice: this.formCreate.value.price,
+      description: this.formCreate.value.description,
+      status: this.formCreate.value.status,
+      imageProduct: this.thumbnail,
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
+      deletedAt: 0,
+    }
+    this.datas.product = data;
+    this.datas.totalProducts = this.formCreate.value.amount;
+    this.datas.imageList = this.images;
+    this.service.updateProduct(this.datas, this.id).subscribe(
+      response => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        setTimeout(() => {
+          this.sttNotifi = false;
+        }, 5000);
+        this.textNotifi = 'Updated Successfully!';
+        this.sttTextNotifi = 'toast-success';
+        window.location.href = '/products';
+      },
+      error => {
+        this.sttLoading = false;
+        this.sttNotifi = true;
+        setTimeout(() => {
+          this.sttNotifi = false;
+        }, 5000);
+        this.textNotifi = error.message;
+        this.sttTextNotifi = 'toast-error';
+      },
+    )
   }
 
   uploadThumbnail(event) {
