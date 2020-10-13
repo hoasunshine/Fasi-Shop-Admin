@@ -12,6 +12,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { InsideRoutingModule } from './inside-routing.module';
 import { InsideComponent } from './inside.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { DetailComponent } from './user/detail/detail.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     TransactionComponent,
     UserComponent,
     CategoryCreateEditComponent,
-    ProductCreateEditComponent
+    ProductCreateEditComponent,
+    DetailComponent
   ],
   exports:[
     InsideComponent

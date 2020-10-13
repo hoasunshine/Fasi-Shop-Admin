@@ -23,9 +23,7 @@ export class ProductComponent implements OnInit {
   getDataClient() {
     this.service.getProductData().subscribe(data => {
       this.productDataList = data['data'];
-      this.productDataListPer = data['data'];  
-      console.log(this.productDataList);
-          
+      this.productDataListPer = data['data'];            
     });
   }
 
@@ -97,8 +95,9 @@ export class ProductComponent implements OnInit {
       this.service.deleteProduct(id).subscribe(
         response => {
           this.sttLoading = false;
+          this.sttNotifi = true;
           setTimeout( () => {
-            this.sttNotifi = true;
+            this.sttNotifi = false;
           }, 5000);
           this.textNotifi = 'Deactive successfully!';
           this.sttTextNotifi = 'toast-success';
@@ -107,7 +106,7 @@ export class ProductComponent implements OnInit {
           this.sttLoading = false;
           this.sttNotifi = true;
           setTimeout( () => {
-            this.sttNotifi = true;
+            this.sttNotifi = false;
           }, 5000);
           this.textNotifi = error.messge;
           this.sttTextNotifi = 'toast-error';

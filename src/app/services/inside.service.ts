@@ -9,6 +9,7 @@ import { Product } from 'src/model/product';
 })
 export class InsideService {
 
+  private accountUrl = 'http://localhost:8080/accounts';
   private categoryUrl = 'http://localhost:8080/categories';
   private productUrl = 'http://localhost:8080/products';
   private orderUrl = 'http://localhost:8080/order';
@@ -16,6 +17,19 @@ export class InsideService {
   private productImageListUrl = 'http://localhost:8080/products/listImage';
 
   constructor(private http: HttpClient) { }
+
+  // Account
+  getAccountData() {
+    return this.http.get(this.accountUrl);
+  }
+
+  getAccountDetail(id) {
+    return this.http.get(`${this.accountUrl}/${id}`);
+  }
+
+  deactiveAccount(id) {
+    return this.http.delete(`${this.accountUrl}/${id}`);
+  }
 
   // Category
   getCategoryData() {
@@ -83,5 +97,9 @@ export class InsideService {
 
   getAllTransaction() {
     return this.http.get(this.orderUrl);
+  }
+
+  changeStatus(path, id) {
+    return this.http.delete(`${this.orderUrl}/${path}/${id}`);
   }
 }
