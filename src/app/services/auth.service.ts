@@ -21,9 +21,9 @@ export class AuthService {
       window.localStorage.setItem('email', item['email']);
       for (let i = 0; i < item['rolesList'].length; i++) {
         if (item['rolesList'][i].roleId === 'Admin') {
-          window.localStorage.setItem('role', item['rolesList'][i].roleName);
+          window.localStorage.setItem('roleId', item['rolesList'][i].roleId);
         } else {
-          window.localStorage.setItem('role', item['rolesList'][i].roleName);
+          window.localStorage.setItem('roleId', item['rolesList'][i].roleId);
         }
       }
     }, (error) => {

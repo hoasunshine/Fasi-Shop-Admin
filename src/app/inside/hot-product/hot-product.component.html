@@ -8,7 +8,6 @@
 </div>
 
 <div id="formCreate">
-    <!-- page title area start -->
     <div class="page-title-area">
         <div class="row align-items-center">
             <div class="col-sm-6">
@@ -32,20 +31,11 @@
             </div>
         </div>
     </div>
-    <!-- page title area end -->
     <div class="main-content-inner">
         <div class="row">
-            <!-- Progress Table start -->
-
             <div class="col-12 mt-5">
                 <div class="row align-items-center">
                     <div class="col-sm-6">
-                        <a href="/product/create-edit">
-                            <button type="button" class="btn btn-add">
-                                <i class="fa fa-plus-circle"></i>
-                                Create
-                            </button>
-                        </a>
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
@@ -72,23 +62,19 @@
                                     <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">Created At <i (click)="sortBy($event, 'timeCre')" class="fa fa-arrow-down"></i></th>
-                                            <th scope="col">Updated At <i (click)="sortBy($event, 'timeUp')" class="fa fa-arrow-down"></i></th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Seller</th>
+                                            <th scope="col">Price</th>
                                             <th scope="col"></th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let item of productDataList| paginate: { itemsPerPage: 20, currentPage: p, id: id  }
+                                        <tr *ngFor="let item of hotProductList| paginate: { itemsPerPage: 20, currentPage: p, id: id  }
                                             , let i = index">
                                             <th scope="row">{{i + 1}}</th>
-                                            <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
-                                            <td>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
-                                            <td>{{item.productName}}</td>
+                                            <td>{{item.product.productName}}</td>
                                             <td>{{item.category.categoryName}}</td>
                                             <td>{{item.description}}</td>
                                             <td><img width="50%" src="{{item.imageProduct}}" alt=""></td>
@@ -119,7 +105,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Progress Table end -->
         </div>
     </div>
 </div>

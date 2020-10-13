@@ -13,6 +13,7 @@ import { InsideRoutingModule } from './inside-routing.module';
 import { InsideComponent } from './inside.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { DetailComponent } from './user/detail/detail.component';
+import { HotProductComponent } from './hot-product/hot-product.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { DetailComponent } from './user/detail/detail.component';
     UserComponent,
     CategoryCreateEditComponent,
     ProductCreateEditComponent,
-    DetailComponent
+    DetailComponent,
+    HotProductComponent
   ],
   exports:[
     InsideComponent

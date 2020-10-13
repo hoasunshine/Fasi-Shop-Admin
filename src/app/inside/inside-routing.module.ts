@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
 import { CategoryCreateEditComponent } from './category/create-edit/create-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HotProductComponent } from './hot-product/hot-product.component';
 import { InsideComponent } from './inside.component';
 import { ProductCreateEditComponent } from './product/create-edit/create-edit.component';
 import { ProductComponent } from './product/product.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
         path: 'users',
         component: UserComponent
       },
+      {
+        path: 'hot-products',
+        component: HotProductComponent
+      }
     ]
   }
 ];

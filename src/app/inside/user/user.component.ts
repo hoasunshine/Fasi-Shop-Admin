@@ -8,7 +8,7 @@ import { InsideService } from 'src/app/services/inside.service';
 export class UserComponent implements OnInit {
 
   userList = [];
-  sellerList = [];
+  adminList = [];
   sttNotifi: boolean = false;
   sttTextNotifi = 'toast-success';
   sttLoading = false;
@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
             this.userList.push(userData[i]);
           }
           if (userData[i]['rolesList'][j]['roleId'] === 1) {
-            this.sellerList.push(userData[i]);
+            this.adminList.push(userData[i]);
           }
         }
       }

@@ -15,6 +15,7 @@ export class InsideService {
   private orderUrl = 'http://localhost:8080/order';
   private productAmountUrl = 'http://localhost:8080/warehouse';
   private productImageListUrl = 'http://localhost:8080/products/listImage';
+  private hotProductUrl = 'http://localhost:8080/hotProducts';
 
   constructor(private http: HttpClient) { }
 
@@ -102,4 +103,11 @@ export class InsideService {
   changeStatus(path, id) {
     return this.http.delete(`${this.orderUrl}/${path}/${id}`);
   }
+
+  // hot product
+
+  getHotProducts() {
+    return this.http.get(this.hotProductUrl);
+  }
+
 }
