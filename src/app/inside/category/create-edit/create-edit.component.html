@@ -48,7 +48,7 @@
                                 <input type="text" class="form-control" formControlName="name" required>
                                 <div *ngIf="formCreated.get('name').invalid && (formCreated.get('name').dirty || formCreated.get('name').touched)" class="text-danger">
                                     <div *ngIf="formCreated.get('name').errors.required">
-                                        Đây là trường bắt buộc phải nhập.
+                                        This is a required field.
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                 </textarea>
                                 <div *ngIf="formCreated.get('description').invalid && (formCreated.get('description').dirty || formCreated.get('description').touched)" class="text-danger">
                                     <div *ngIf="formCreated.get('description').errors.required">
-                                        Đây là trường bắt buộc phải nhập.
+                                        This is a required field.
                                     </div>
                                 </div>
                             </div>

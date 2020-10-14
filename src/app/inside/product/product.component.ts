@@ -13,18 +13,32 @@ export class ProductComponent implements OnInit {
   sttTextNotifi = 'toast-success';
   sttLoading = false;
   textNotifi: string;
-
+  roleId: string;
+  productAmountList = [];
   constructor(private service: InsideService) { }
 
   ngOnInit() {
+    this.roleId = window.localStorage.getItem('roleId');
     this.getDataClient();
   }
 
   getDataClient() {
-    this.service.getProductData().subscribe(data => {
-      this.productDataList = data['data'];
-      this.productDataListPer = data['data'];            
-    });
+    const accountId = window.localStorage.getItem('id');
+    if (this.roleId == '1') {
+      this.service.getProductData().subscribe(data => {
+        this.productDataList = data['data'].sort((a,b) => {
+          return b.createdAt - a.createdAt;
+        });
+        this.productDataListPer = data['data'];
+      });
+    } else {
+      this.service.getProductData().subscribe(data => {
+        this.productDataList = data['data'].sort((a,b) => {
+          return b.createdAt - a.createdAt;
+        });
+        this.productDataList = this.productDataList.filter(item => item.accountId == accountId);
+      })
+    }
   }
 
   dismissToast() {
@@ -44,7 +58,7 @@ export class ProductComponent implements OnInit {
     if (this.productDataList.length === 0) {
       this.sttLoading = false;
       this.sttNotifi = true;
-      setTimeout( () => {
+      setTimeout(() => {
         this.sttNotifi = false;
       }, 5000);
       this.textNotifi = 'No product data!';
@@ -55,17 +69,17 @@ export class ProductComponent implements OnInit {
   }
 
   sortBy($event, type) {
-    const checked = $event.target.classList.contains('fa-arrow-up');
+    const checked = $event.target.classList.contains('ti-arrow-up');
     if (checked) {
-      $event.target.classList.remove('fa-arrow-up');
-      $event.target.classList.add('fa-arrow-down');
+      $event.target.classList.remove('ti-arrow-up');
+      $event.target.classList.add('ti-arrow-down');
     } else {
-      $event.target.classList.remove('fa-arrow-down');
-      $event.target.classList.add('fa-arrow-up');
+      $event.target.classList.remove('ti-arrow-down');
+      $event.target.classList.add('ti-arrow-up');
     }
     switch (type) {
       case 'timeCre':
-        this.productDataList = this.productDataListPer.sort((a,b) => {
+        this.productDataList = this.productDataListPer.sort((a, b) => {
           if (checked) {
             return b.createdAt - a.createdAt;
           } else {
@@ -96,7 +110,7 @@ export class ProductComponent implements OnInit {
         response => {
           this.sttLoading = false;
           this.sttNotifi = true;
-          setTimeout( () => {
+          setTimeout(() => {
             this.sttNotifi = false;
           }, 5000);
           this.textNotifi = 'Deactive successfully!';
@@ -105,7 +119,7 @@ export class ProductComponent implements OnInit {
         error => {
           this.sttLoading = false;
           this.sttNotifi = true;
-          setTimeout( () => {
+          setTimeout(() => {
             this.sttNotifi = false;
           }, 5000);
           this.textNotifi = error.messge;

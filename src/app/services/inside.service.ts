@@ -110,4 +110,10 @@ export class InsideService {
     return this.http.get(this.hotProductUrl);
   }
 
+  activeHotProduct(id) {
+    return this.http.put(`${this.hotProductUrl}/${id}`, {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
 }
