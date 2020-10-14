@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { InsideService } from 'src/app/services/inside.service';
 
 @Component({
-  selector: 'app-transaction',
-  templateUrl: './transaction.component.html',
+  selector: 'app-my-transactions',
+  templateUrl: './my-transactions.component.html',
 })
-export class TransactionComponent implements OnInit {
+export class MyTransactionsComponent implements OnInit {
 
   sttAdmin = false;
   sttLoading = false;
@@ -14,7 +14,6 @@ export class TransactionComponent implements OnInit {
   textNotifi: string;
   transactionList = [];
   transactionListPer = [];
-  userData = [];
   constructor(private service: InsideService) { }
 
   ngOnInit() {
@@ -23,35 +22,86 @@ export class TransactionComponent implements OnInit {
 
   getData() {
     const accountId = window.localStorage.getItem('id');
-    if (accountId == '2') {
-      this.service.getAllTransaction().subscribe(data => {
-        this.transactionList = data['data']['list'];
-        this.transactionList = this.transactionList.filter(item => item.sellerId == accountId);
+    this.service.getAllTransaction().subscribe(data => {
+      this.transactionList = data['data']['list'].sort((a, b) => {
+        return b.createdAt - a.createdAt;
       });
-    }
-    if (accountId == '1') {
-      this.sttAdmin = true;
-      this.service.getAllTransaction().subscribe(data => {
-        this.transactionList = data['data']['list'];
+      this.transactionListPer = data['data']['list'].sort((a, b) => {
+        return b.createdAt - a.createdAt;
       });
-    }
-    this.service.getAccountData().subscribe(data => {
-      this.userData = data['data']['accountDTOList'];       
-    })
-  }
-
-  getSellerName(id) {
-    for (let i = 0; i < this.userData.length; i++) {
-      if (this.userData[i].accountId == id) {
-        return this.userData[i].accountName;
-      }
-    }
+      this.transactionList = this.transactionList.filter(item => item.sellerId == accountId);
+      this.transactionListPer = this.transactionListPer.filter(item => item.sellerId == accountId);
+    });
   }
 
   dismissToast() {
     this.sttNotifi = false;
   }
 
+  search(val: any) {
+    const arr = [];
+    const data = this.transactionListPer;
+    for (let i = 0; i < data.length; i++) {
+      const text = (data[i].accountName).toLowerCase();
+      if (text.indexOf(val.toLowerCase()) !== -1) {
+        arr.push(data[i]);
+      }
+    }
+    this.transactionList = arr;
+    if (this.transactionList.length === 0) {
+      this.sttLoading = false;
+      this.sttNotifi = true;
+      setTimeout(() => {
+        this.sttNotifi = false;
+      }, 5000);
+      this.textNotifi = 'No data!';
+      this.sttTextNotifi = 'toast-error';
+    } else {
+      this.sttNotifi = false;
+    }
+  }
+
+  sortBy($event, type) {
+    const checked = $event.target.classList.contains('ti-arrow-up');
+    if (checked) {
+      $event.target.classList.remove('ti-arrow-up');
+      $event.target.classList.add('ti-arrow-down');
+    } else {
+      $event.target.classList.remove('ti-arrow-down');
+      $event.target.classList.add('ti-arrow-up');
+    }
+    switch (type) {
+      case 'timeCre':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.createdAt - a.createdAt;
+          } else {
+            return a.createdAt - b.createdAt;
+          }
+        })
+        break;
+      case 'timeUp':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.updatedAt - a.updatedAt;
+          } else {
+            return a.updatedAt - b.updatedAt;
+          }
+        })
+        break;
+      case 'totalPrice':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.totalPrice - a.totalPrice;
+          } else {
+            return a.totalPrice - b.totalPrice;
+          }
+        })
+        break;
+      default:
+        break;
+    }
+  }
 
   changeStatus(type, id) {
     console.log(type, id);

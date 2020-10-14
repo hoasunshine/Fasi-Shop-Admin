@@ -19,13 +19,7 @@ export class AuthService {
     return this.http.post(this.loginUrl, body).subscribe(item => {
       window.localStorage.setItem('id', item['accountId']);
       window.localStorage.setItem('email', item['email']);
-      for (let i = 0; i < item['rolesList'].length; i++) {
-        if (item['rolesList'][i].roleId === 'Admin') {
-          window.localStorage.setItem('roleId', item['rolesList'][i].roleId);
-        } else {
-          window.localStorage.setItem('roleId', item['rolesList'][i].roleId);
-        }
-      }
+      window.localStorage.setItem('roleId', item['rolesList'][0].roleId);
     }, (error) => {
       window.localStorage.setItem('role', 'none');
     })

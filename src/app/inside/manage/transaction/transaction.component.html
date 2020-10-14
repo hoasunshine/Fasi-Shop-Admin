@@ -1,0 +1,120 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
+<!-- page title area start -->
+<div class="page-title-area">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <div class="breadcrumbs-area clearfix">
+                <h4 class="page-title pull-left">Dashboard</h4>
+                <ul class="breadcrumbs pull-left">
+                    <li><a href="index.html">Home</a></li>
+                    <li><span>Transaction</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6 clearfix">
+            <div class="user-profile pull-right">
+                <div class="search-box pull-left">
+                    <form action="#">
+                        <input type="text" name="search" placeholder="Search..." (input)="search($event.target.value)">
+                        <i class=" ti-search "></i>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- page title area end -->
+<div class="main-content-inner ">
+    <div class="row ">
+        <!-- Progress Table start -->
+        <div class="col-12 mt-5 ">
+            <div class="card ">
+                <div class="card-body ">
+                    <h4 class="header-title ">Transaction Table</h4>
+                    <div class="single-table ">
+                        <div class="table-responsive ">
+                            <table class="table table-hover progress-table text-center ">
+                                <thead class="text-uppercase ">
+                                    <tr>
+                                        <th scope="col">No</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Updated At</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Payment Type</th>
+                                        <th scope="col">Transporter Name</th>
+                                        <th scope="col">Seller</th>
+                                        <th scope="col">Status</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of transactionList, let i = 
+                                    
+                                    index ">
+                                        <th scope="row ">{{i + 1}}</th>
+                                        <th scope="row ">{{item.id}}</th>
+                                        <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss' : 'VI'}}</td>
+                                        <td>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss' : 'VI'}}</td>
+                                        <td>{{item.accountName}}</td>
+                                        <td>${{item.totalPrice}}</td>
+                                        <td>{{item.paymentType}}</td>
+                                        <td>{{item.transportersName}}</td>
+                                        <td>{{getSellerName(item.sellerId)}}</td>
+                                        <td *ngIf="item.status==='Pending' ">
+                                            <span class="status-p bg-secondary ">Pending</span>
+                                        </td>
+                                        <td *ngIf="item.status==='Condirmed' ">
+                                            <span class="status-p bg-info ">Confirmed</span>
+                                        </td>
+                                        <td *ngIf="item.status==='Shipping' ">
+                                            <span class="status-p bg-primary ">Shipping</span>
+                                        </td>
+                                        <td *ngIf="item.status==='Paid' ">
+                                            <span class="status-p bg-success ">Paid</span>
+                                        </td>
+                                        <td *ngIf="item.status==='Done' ">
+                                            <span class="status-p bg-success ">Done</span>
+                                        </td>
+                                        <td *ngIf="item.status==='Cancel' ">
+                                            <span class="status-p bg-danger ">Cancel</span>
+                                        </td>
+                                        <td>
+                                            <ul class="d-flex justify-content-center ">
+                                                <li class="mr-3 ">
+                                                    <a class="text-secondary ">
+                                                        <i class="fa fa-edit "></i>
+                                                    </a>
+                                                </li>
+                                                <li *ngIf="item.status !=='Done' && item.status !=='Cancel' " title="Change Status " class="mr-3 " (click)="changeStatus(item.status, item.id) ">
+                                                    <a class="text-secondary ">
+                                                        <i class="fa fa-arrow-circle-right "></i>
+                                                    </a>
+                                                </li>
+                                                <li (click)="deleteTrans(item.id) " *ngIf="item.status !=='Cancel' && item.status !=='Done' ">
+                                                    <a class="text-danger ">
+                                                        <i class="ti-trash "></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Progress Table end -->
+    </div>
+</div>

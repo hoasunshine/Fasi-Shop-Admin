@@ -127,7 +127,7 @@ export class ProductCreateEditComponent implements OnInit {
         }, 5000);
         this.textNotifi = 'Created Successfully!';
         this.sttTextNotifi = 'toast-success';
-        window.location.href = '/products';
+        window.location.href = '/product-list';
       },
       error => {
         this.sttLoading = false;

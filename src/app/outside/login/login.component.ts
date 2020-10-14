@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
     await this.service.doLogin(data);
-    if (window.localStorage.getItem('roleId') === '1') {
+    if (window.localStorage.getItem('roleId') === '1' || window.localStorage.getItem('roleId') === '2') {
       this.sttLoading = false;
       this.sttNotifi = true;
       setTimeout(() => {
