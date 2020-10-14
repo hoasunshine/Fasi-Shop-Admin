@@ -22,14 +22,14 @@ export class TransactionComponent implements OnInit {
   }
 
   getData() {
-    const id = window.localStorage.getItem('id');
-    if (id == '2') {
+    const accountId = window.localStorage.getItem('id');
+    if (accountId == '2') {
       this.service.getAllTransaction().subscribe(data => {
         this.transactionList = data['data']['list'];
-        this.transactionList = this.transactionList.filter(item => item.sellerId == id);
+        this.transactionList = this.transactionList.filter(item => item.sellerId == accountId);
       });
     }
-    if (id == '1') {
+    if (accountId == '1') {
       this.sttAdmin = true;
       this.service.getAllTransaction().subscribe(data => {
         this.transactionList = data['data']['list'];

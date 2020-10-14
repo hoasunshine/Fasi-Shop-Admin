@@ -6,9 +6,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InsideComponent implements OnInit {
 
+  roleId: string;
   constructor() { }
 
   ngOnInit() {
+    this.roleId = window.localStorage.getItem('roleId');
   }
 
   logOut() {
