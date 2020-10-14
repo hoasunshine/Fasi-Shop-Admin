@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CategoryComponent } from './category/category.component';
-import { CategoryCreateEditComponent } from './category/create-edit/create-edit.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { HotProductComponent } from './hot-product/hot-product.component';
+import { CategoryComponent } from './manage/category/category.component';
+import { CategoryCreateEditComponent } from './manage/category/create-edit/create-edit.component';
+import { DashboardComponent } from './manage/dashboard/dashboard.component';
+import { HotProductComponent } from './manage/hot-product/hot-product.component';
 import { InsideComponent } from './inside.component';
-import { ProductCreateEditComponent } from './product/create-edit/create-edit.component';
-import { ProductComponent } from './product/product.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import { UserComponent } from './user/user.component';
+import { ProductCreateEditComponent } from './manage/product/create-edit/create-edit.component';
+import { ProductComponent } from './manage/product/product.component';
+import { TransactionComponent } from './manage/transaction/transaction.component';
+import { UserComponent } from './manage/user/user.component';
+import { MyProductsComponent } from './seller/my-products/my-products.component';
+import { MyTransactionsComponent } from './seller/my-transactions/my-transactions.component';
 
 const routes: Routes = [
   {
@@ -47,7 +49,15 @@ const routes: Routes = [
       {
         path: 'hot-products',
         component: HotProductComponent
-      }
+      },
+      {
+        path: 'product-list',
+        component: MyProductsComponent,
+      },
+      {
+        path: 'transaction-list',
+        component: MyTransactionsComponent,
+      },
     ]
   }
 ];

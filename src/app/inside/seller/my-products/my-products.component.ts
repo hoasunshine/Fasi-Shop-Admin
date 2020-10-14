@@ -2,43 +2,37 @@ import { Component, OnInit } from '@angular/core';
 import { InsideService } from 'src/app/services/inside.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
+  selector: 'app-my-products',
+  templateUrl: './my-products.component.html',
 })
-export class ProductComponent implements OnInit {
-  productDataList = [];
-  productDataListPer = [];
-  sttAdd: boolean = true;
-  sttNotifi: boolean = false;
+export class MyProductsComponent implements OnInit {
+
+  accountId: string;
+  productList = [];
+  productListPer = [];
+  sttNotifi = false;
   sttTextNotifi = 'toast-success';
   sttLoading = false;
   textNotifi: string;
-  roleId: string;
-  productAmountList = [];
+
   constructor(private service: InsideService) { }
 
   ngOnInit() {
-    this.roleId = window.localStorage.getItem('roleId');
-    this.getDataClient();
+    this.accountId = window.localStorage.getItem('id');
+    this.getData();
   }
 
-  getDataClient() {
-    const accountId = window.localStorage.getItem('id');
-    if (this.roleId == '1') {
-      this.service.getProductData().subscribe(data => {
-        this.productDataList = data['data'].sort((a,b) => {
-          return b.createdAt - a.createdAt;
-        });
-        this.productDataListPer = data['data'];
-      });
-    } else {
-      this.service.getProductData().subscribe(data => {
-        this.productDataList = data['data'].sort((a,b) => {
-          return b.createdAt - a.createdAt;
-        });
-        this.productDataList = this.productDataList.filter(item => item.accountId == accountId);
+  getData() {
+    this.service.getProductData().subscribe(data => {
+      this.productList = data['data'].sort((a, b) => {
+        return b.createdAt - a.createdAt;
       })
-    }
+      this.productListPer = data['data'].sort((a, b) => {
+        return b.createdAt - a.createdAt;
+      })
+      this.productList = this.productList.filter(item => item.accountId == this.accountId);
+      this.productListPer = this.productListPer.filter(item => item.accountId == this.accountId);
+    })
   }
 
   dismissToast() {
@@ -47,15 +41,15 @@ export class ProductComponent implements OnInit {
 
   search(val: any) {
     const arr = [];
-    const data = this.productDataListPer;
+    const data = this.productListPer;
     for (let i = 0; i < data.length; i++) {
       const text = (data[i].productName).toLowerCase();
       if (text.indexOf(val.toLowerCase()) !== -1) {
         arr.push(data[i]);
       }
     }
-    this.productDataList = arr;
-    if (this.productDataList.length === 0) {
+    this.productList = arr;
+    if (this.productList.length === 0) {
       this.sttLoading = false;
       this.sttNotifi = true;
       setTimeout(() => {
@@ -79,7 +73,7 @@ export class ProductComponent implements OnInit {
     }
     switch (type) {
       case 'timeCre':
-        this.productDataList = this.productDataListPer.sort((a, b) => {
+        this.productList = this.productListPer.sort((a, b) => {
           if (checked) {
             return b.createdAt - a.createdAt;
           } else {
@@ -88,15 +82,31 @@ export class ProductComponent implements OnInit {
         })
         break;
       case 'timeUp':
-        const byTimeUp = this.productDataList.slice(0);
-        byTimeUp.sort((a, b) => {
+        this.productList = this.productListPer.sort((a, b) => {
           if (checked) {
             return b.updatedAt - a.updatedAt;
           } else {
             return a.updatedAt - b.updatedAt;
           }
-        });
-        this.productDataList = byTimeUp;
+        })
+        break;
+      case 'price':
+        this.productList = this.productListPer.sort((a, b) => {
+          if (checked) {
+            return b.productPrice - a.productPrice;
+          } else {
+            return a.productPrice - b.productPrice;
+          }
+        })
+        break;
+      case 'amount':
+        this.productList = this.productListPer.sort((a, b) => {
+          if (checked) {
+            return b.totalProduct - a.totalProduct;
+          } else {
+            return a.totalProduct - b.totalProduct;
+          }
+        })
         break;
       default:
         break;
@@ -128,4 +138,5 @@ export class ProductComponent implements OnInit {
       )
     }
   }
+
 }

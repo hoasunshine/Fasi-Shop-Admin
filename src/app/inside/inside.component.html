@@ -21,18 +21,27 @@
                     <ul class="metismenu" id="menu">
                         <li><a href="/dashboard"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
                         <li>
+                            <a routerLink="/product-list"><i class="ti-harddrives"></i>
+                                <span>Product List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/transaction-list"><i class="ti-shopping-cart"></i>
+                                <span>Transaction List</span>
+                            </a>
+                        </li>
+                        <li *ngIf="this.roleId == 1">
                             <a href="javascript:void(0)" aria-expanded="true"><i class="ti-layout-column3"></i><span>
                                     Manage
                                 </span></a>
                             <ul class="collapse">
                                 <li><a href="/categories">Categories</a></li>
                                 <li><a href="/products">Products</a></li>
-                                <li *ngIf="this.roleId == 1"><a href="/hot-products">Hot Products</a></li>
-                                <li *ngIf="this.roleId == 1"><a href="/users">Users</a></li>
+                                <li><a href="/hot-products">Hot Products</a></li>
+                                <li><a href="/users">Users</a></li>
+                                <li><a href="/transactions">Transactions</a></li>
                             </ul>
-                            <li><a routerLink="/transactions"><i class="ti-shopping-cart"></i> <span>Transactions</span></a>
-                            </li>
-
+                        </li>
                     </ul>
                 </nav>
             </div>

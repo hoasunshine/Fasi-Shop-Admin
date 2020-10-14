@@ -72,13 +72,14 @@
                                     <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">No</th>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Created At <i (click)="sortBy($event, 'timeCre')" class="ti-arrow-down"></i></th>
                                             <th scope="col">Updated At <i (click)="sortBy($event, 'timeUp')" class="ti-arrow-down"></i></th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Description</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Amount</th>
+                                            <th scope="col">Price <i (click)="sortBy($event, 'price')" class="ti-arrow-down"></i></th>
+                                            <th scope="col">Amount <i (click)="sortBy($event, 'amount')" class="ti-arrow-down"></i></th>
                                             <th scope="col"></th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Action</th>
@@ -88,6 +89,7 @@
                                         <tr *ngFor="let item of productDataList| paginate: { itemsPerPage: 20, currentPage: p, id: id  }
                                             , let i = index">
                                             <th scope="row">{{i + 1}}</th>
+                                            <th scope="row">{{item.productId}}</th>
                                             <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
                                             <td>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
                                             <td>{{item.productName}}</td>
@@ -102,13 +104,8 @@
                                             <td>
                                                 <ul class="d-flex justify-content-center">
                                                     <li class="mr-3">
-                                                        <a [routerLink]="['/product/create-edit']" [queryParams]="{id: item.productId}" class="text-secondary">
-                                                            <i class="ti-pencil-alt"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li *ngIf="item.status!=='Deactive'">
-                                                        <a (click)="deleteProduct(item.productId)" class="text-danger">
-                                                            <i class="ti-trash"></i>
+                                                        <a class="text-secondary">
+                                                            <i class="ti-eye"></i>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -116,7 +113,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <pagination-controls maxSize="5" *ngIf="productDataList.length > 25" style="text-align: right" [id]="id" (pageChange)="p = $event">
+                                <pagination-controls maxSize="5" *ngIf="productDataList.length > 1" style="text-align: right" [id]="id" (pageChange)="p = $event">
                                 </pagination-controls>
                             </div>
                         </div>
