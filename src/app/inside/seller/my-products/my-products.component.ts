@@ -32,6 +32,14 @@ export class MyProductsComponent implements OnInit {
       })
       this.productList = this.productList.filter(item => item.accountId == this.accountId);
       this.productListPer = this.productListPer.filter(item => item.accountId == this.accountId);
+      if (this.productList.length == 0) {
+        this.sttNotifi = true;
+        setTimeout(() => {
+          this.sttNotifi = false
+        }, 5000);
+        this.textNotifi = 'You have no products yet!!!';
+        this.sttTextNotifi = 'toast-error';
+      }
     })
   }
 
@@ -110,6 +118,13 @@ export class MyProductsComponent implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+  hotProductRequest(id) {
+    const confirmed = confirm('Do you want to submit a request to put this product on hot product?')
+    if (confirmed) {
+
     }
   }
 

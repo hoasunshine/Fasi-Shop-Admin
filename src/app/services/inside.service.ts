@@ -116,4 +116,8 @@ export class InsideService {
     })
   }
 
+  deactiveHotProduct(id) {
+    return this.http.delete(`${this.hotProductUrl}/${id}`);
+  }
+
 }

@@ -58,6 +58,29 @@ export class HotProductComponent implements OnInit {
         }
       )
     }
+  }
 
+  deactiveHotProduct(id) {
+    const confirmed = confirm('Do you want to deactive this product?');
+    if (confirmed) {
+      this.service.deactiveHotProduct(id).subscribe(
+        response => {
+          this.sttNotifi = true;
+          setTimeout(() => {
+            this.sttNotifi = false;
+          }, 5000);
+          this.textNotifi = 'Dective successfully!';
+          this.sttTextNotifi = 'toast-success';
+          window.location.reload();
+        }, error => {
+          this.sttNotifi = true;
+          setTimeout(() => {
+            this.sttNotifi = false
+          }, 5000);
+          this.textNotifi = error.message;
+          this.sttTextNotifi = 'toast-error';
+        }
+      )
+    }
   }
 }

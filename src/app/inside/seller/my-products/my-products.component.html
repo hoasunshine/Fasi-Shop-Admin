@@ -80,7 +80,7 @@
                                             <th scope="col">Amount <i (click)="sortBy($event, 'amount')" class="ti-arrow-down"></i></th>
                                             <th scope="col"></th>
                                             <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -106,7 +106,12 @@
                                                             <i class="ti-pencil-alt"></i>
                                                         </a>
                                                     </li>
-                                                    <li *ngIf="item.status!=='Deactive'">
+                                                    <li *ngIf="item.status!=='Deactive'" class="mr-3">
+                                                        <a (click)="hotProductRequest(item.productId)" class="text-success">
+                                                            <i class="ti-hand-point-up"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li *ngIf="item.status!=='Deactive'" class="mr-3">
                                                         <a (click)="deleteProduct(item.productId)" class="text-danger">
                                                             <i class="ti-trash"></i>
                                                         </a>

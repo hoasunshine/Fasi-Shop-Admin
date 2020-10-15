@@ -6,8 +6,7 @@ import { InsideService } from 'src/app/services/inside.service';
   templateUrl: './product.component.html',
 })
 export class ProductComponent implements OnInit {
-  productDataList = [];
-  productDataListPer = [];
+  
   sttAdd = true;
   sttNotifi = false;
   sttTextNotifi = 'toast-success';
@@ -15,6 +14,9 @@ export class ProductComponent implements OnInit {
   textNotifi: string;
   roleId: string;
   productAmountList = [];
+  productDataList = [];
+  productDataListPer = [];
+  userData = [];
   
   constructor(private service: InsideService) { }
 
@@ -30,6 +32,14 @@ export class ProductComponent implements OnInit {
       });
       this.productDataListPer = data['data'];
     });
+    this.service.getAccountData().subscribe(data => {
+      this.userData = data['data']['accountDTOList'];
+    })
+  }
+
+  getSellerName(id) {
+    const findUser = this.userData.find(item => item.accountId == id)
+    return findUser.accountName;
   }
 
   dismissToast() {
