@@ -46,10 +46,10 @@
                                     <tr>
                                         <th scope="col">No</th>
                                         <th scope="col">ID</th>
-                                        <th scope="col">Created At</th>
-                                        <th scope="col">Updated At</th>
+                                        <th scope="col">Created At <i (click)="sortBy($event, 'timeCre')" class="ti-arrow-down"></i></th>
+                                        <th scope="col">Updated At <i (click)="sortBy($event, 'timeUp')" class="ti-arrow-down"></i></th>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Total Price</th>
+                                        <th scope="col">Total Price <i (click)="sortBy($event, 'totalPrice')" class="ti-arrow-down"></i></th>
                                         <th scope="col">Payment Type</th>
                                         <th scope="col">Transporter</th>
                                         <th scope="col">Seller</th>
@@ -58,7 +58,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of transactionList, let i = index ">
+                                    <tr *ngFor="let item of transactionList | paginate: { itemsPerPage: 20, currentPage: p, id: id}, let i = index ">
                                         <th scope="row ">{{i + 1}}</th>
                                         <th scope="row ">{{item.id}}</th>
                                         <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss' : 'VI'}}</td>
@@ -98,6 +98,8 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <pagination-controls maxSize="5" *ngIf="transactionList.length > 1" style="text-align: right" [id]="id" (pageChange)="p = $event">
+                            </pagination-controls>
                         </div>
                     </div>
                 </div>

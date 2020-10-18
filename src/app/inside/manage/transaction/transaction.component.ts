@@ -38,4 +38,50 @@ export class TransactionComponent implements OnInit {
       }
     }
   }
+
+  dismissToast() {
+    this.sttNotifi = false;
+  }
+
+  sortBy($event, type) {
+    const checked = $event.target.classList.contains('ti-arrow-up');
+    if (checked) {
+      $event.target.classList.remove('ti-arrow-up');
+      $event.target.classList.add('ti-arrow-down');
+    } else {
+      $event.target.classList.remove('ti-arrow-down');
+      $event.target.classList.add('ti-arrow-up');
+    }
+    switch (type) {
+      case 'timeCre':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.createdAt - a.createdAt;
+          } else {
+            return a.createdAt - b.createdAt;
+          }
+        })
+        break;
+      case 'timeUp':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.updatedAt - a.updatedAt;
+          } else {
+            return a.updatedAt - b.updatedAt;
+          }
+        })
+        break;
+      case 'totalPrice':
+        this.transactionList = this.transactionList.sort((a, b) => {
+          if (checked) {
+            return b.totalPrice - a.totalPrice;
+          } else {
+            return a.totalPrice - b.totalPrice;
+          }
+        })
+        break;
+      default:
+        break;
+    }
+  }
 }
