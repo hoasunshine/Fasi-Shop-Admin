@@ -61,8 +61,10 @@
                                     <thead class="text-uppercase">
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">Product Name</th>
-                                            <th scope="col">Category Name</th>
+                                            <th scope="col">Created At</th>
+                                            <th scope="col">Updated At</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Seller</th>
                                             <th scope="col">Price</th>
                                             <th scope="col"></th>
@@ -74,6 +76,8 @@
                                         <tr *ngFor="let item of hotProductList
                                             , let i = index">
                                             <th scope="row">{{i + 1}}</th>
+                                            <th>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</th>
+                                            <th>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</th>
                                             <td>{{item.product.productName}}</td>
                                             <td>{{item.product.category.categoryName}}</td>
                                             <td>{{getSellerName(item.product.accountId)}}</td>
@@ -90,7 +94,7 @@
                                                     </li>
                                                     <li *ngIf="item.status=='Active'">
                                                         <a class="text-danger">
-                                                            <i class="ti-trash"></i>
+                                                            <i (click)="deactiveHotProduct(item.hotProductId)" class="ti-trash"></i>
                                                         </a>
                                                     </li>
                                                     <li *ngIf="item.status=='Deactive'">

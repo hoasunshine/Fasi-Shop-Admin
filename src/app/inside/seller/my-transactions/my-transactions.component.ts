@@ -31,6 +31,14 @@ export class MyTransactionsComponent implements OnInit {
       });
       this.transactionList = this.transactionList.filter(item => item.sellerId == accountId);
       this.transactionListPer = this.transactionListPer.filter(item => item.sellerId == accountId);
+      if (this.transactionList.length === 0) {
+        this.sttNotifi = true;
+        setTimeout(() => {
+          this.sttNotifi = false
+        }, 5000);
+        this.textNotifi = 'You have no orders yet!!!';
+        this.sttTextNotifi = 'toast-error';
+      }
     });
   }
 

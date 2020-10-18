@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { error } from 'protractor';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -15,8 +15,13 @@ export class LoginComponent implements OnInit {
   sttTextNotifi = 'toast-success';
   sttLoading: boolean = false;
   textNotifi: string;
+  returnUrl: string;
 
-  constructor(private router: Router, private fb: FormBuilder, private service: AuthService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private service: AuthService) {
+    if (this.service.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     this.createForm();
@@ -27,6 +32,7 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   dismissToast() {
@@ -39,24 +45,24 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     };
     await this.service.doLogin(data);
-    if (window.localStorage.getItem('roleId') === '1' || window.localStorage.getItem('roleId') === '2') {
-      this.sttLoading = false;
-      this.sttNotifi = true;
-      setTimeout(() => {
-        this.sttNotifi = false;
-      }, 5000);
-      this.textNotifi = 'Verified!';
-      this.sttTextNotifi = 'toast-success';
-      window.location.href = '/dashboard';
-    } else {
-      this.sttLoading = false;
-      this.sttNotifi = true;
-      setTimeout(() => {
-        this.sttNotifi = false;
-      }, 5000);
-      this.textNotifi = 'Not permission!!!';
-      this.sttTextNotifi = 'toast-error';
-    }
+    // if (window.localStorage.getItem('roleId') === '1' || window.localStorage.getItem('roleId') === '2') {
+    //   this.sttLoading = false;
+    //   this.sttNotifi = true;
+    //   setTimeout(() => {
+    //     this.sttNotifi = false;
+    //   }, 5000);
+    //   this.textNotifi = 'Verified!';
+    //   this.sttTextNotifi = 'toast-success';
+    //   window.location.href = '/dashboard';
+    // } else {
+    //   this.sttLoading = false;
+    //   this.sttNotifi = true;
+    //   setTimeout(() => {
+    //     this.sttNotifi = false;
+    //   }, 5000);
+    //   this.textNotifi = 'Not permission!!!';
+    //   this.sttTextNotifi = 'toast-error';
+    // }
   }
 
   async ngAfterViewInit() {

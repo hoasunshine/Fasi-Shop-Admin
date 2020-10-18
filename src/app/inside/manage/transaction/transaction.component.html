@@ -12,9 +12,9 @@
     <div class="row align-items-center">
         <div class="col-sm-6">
             <div class="breadcrumbs-area clearfix">
-                <h4 class="page-title pull-left">Dashboard</h4>
                 <ul class="breadcrumbs pull-left">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/dashboard">Home</a></li>
+                    <li><a><span>Manage</span></a></li>
                     <li><span>Transaction</span></li>
                 </ul>
             </div>
@@ -51,16 +51,14 @@
                                         <th scope="col">Username</th>
                                         <th scope="col">Total Price</th>
                                         <th scope="col">Payment Type</th>
-                                        <th scope="col">Transporter Name</th>
+                                        <th scope="col">Transporter</th>
                                         <th scope="col">Seller</th>
                                         <th scope="col">Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of transactionList, let i = 
-                                    
-                                    index ">
+                                    <tr *ngFor="let item of transactionList, let i = index ">
                                         <th scope="row ">{{i + 1}}</th>
                                         <th scope="row ">{{item.id}}</th>
                                         <td>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss' : 'VI'}}</td>
@@ -70,39 +68,29 @@
                                         <td>{{item.paymentType}}</td>
                                         <td>{{item.transportersName}}</td>
                                         <td>{{getSellerName(item.sellerId)}}</td>
-                                        <td *ngIf="item.status==='Pending' ">
-                                            <span class="status-p bg-secondary ">Pending</span>
+                                        <td *ngIf="item.status==='Pending'">
+                                            <span class="status-p bg-secondary">Pending</span>
                                         </td>
-                                        <td *ngIf="item.status==='Condirmed' ">
+                                        <td *ngIf="item.status==='Condirmed'">
                                             <span class="status-p bg-info ">Confirmed</span>
                                         </td>
-                                        <td *ngIf="item.status==='Shipping' ">
-                                            <span class="status-p bg-primary ">Shipping</span>
+                                        <td *ngIf="item.status==='Shipping'">
+                                            <span class="status-p bg-primary">Shipping</span>
                                         </td>
                                         <td *ngIf="item.status==='Paid' ">
-                                            <span class="status-p bg-success ">Paid</span>
+                                            <span class="status-p bg-success">Paid</span>
                                         </td>
                                         <td *ngIf="item.status==='Done' ">
-                                            <span class="status-p bg-success ">Done</span>
+                                            <span class="status-p bg-success">Done</span>
                                         </td>
                                         <td *ngIf="item.status==='Cancel' ">
-                                            <span class="status-p bg-danger ">Cancel</span>
+                                            <span class="status-p bg-danger">Cancel</span>
                                         </td>
                                         <td>
-                                            <ul class="d-flex justify-content-center ">
+                                            <ul class="d-flex justify-content-center">
                                                 <li class="mr-3 ">
-                                                    <a class="text-secondary ">
-                                                        <i class="fa fa-edit "></i>
-                                                    </a>
-                                                </li>
-                                                <li *ngIf="item.status !=='Done' && item.status !=='Cancel' " title="Change Status " class="mr-3 " (click)="changeStatus(item.status, item.id) ">
-                                                    <a class="text-secondary ">
-                                                        <i class="fa fa-arrow-circle-right "></i>
-                                                    </a>
-                                                </li>
-                                                <li (click)="deleteTrans(item.id) " *ngIf="item.status !=='Cancel' && item.status !=='Done' ">
-                                                    <a class="text-danger ">
-                                                        <i class="ti-trash "></i>
+                                                    <a class="text-secondary">
+                                                        <i class="ti-eye"></i>
                                                     </a>
                                                 </li>
                                             </ul>
