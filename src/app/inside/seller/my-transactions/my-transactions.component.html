@@ -88,7 +88,7 @@
                                         <td>
                                             <ul class="d-flex justify-content-center">
                                                 <li class="mr-3 ">
-                                                    <a class="text-secondary">
+                                                    <a [routerLink]="['/transaction/detail']" [queryParams]="{id: item.id}" class="text-secondary">
                                                         <i class="ti-eye"></i>
                                                     </a>
                                                 </li>

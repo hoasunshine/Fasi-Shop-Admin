@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
 
   constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private service: AuthService) {
-    if (this.service.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    // if (this.service.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
-  ngOnInit() {
+  ngOnInit(){
     this.createForm();
   }
 
@@ -39,30 +39,12 @@ export class LoginComponent implements OnInit {
     this.sttNotifi = false;
   }
 
-  async doLogin() {
+  doLogin() {
     const data = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    await this.service.doLogin(data);
-    // if (window.localStorage.getItem('roleId') === '1' || window.localStorage.getItem('roleId') === '2') {
-    //   this.sttLoading = false;
-    //   this.sttNotifi = true;
-    //   setTimeout(() => {
-    //     this.sttNotifi = false;
-    //   }, 5000);
-    //   this.textNotifi = 'Verified!';
-    //   this.sttTextNotifi = 'toast-success';
-    //   window.location.href = '/dashboard';
-    // } else {
-    //   this.sttLoading = false;
-    //   this.sttNotifi = true;
-    //   setTimeout(() => {
-    //     this.sttNotifi = false;
-    //   }, 5000);
-    //   this.textNotifi = 'Not permission!!!';
-    //   this.sttTextNotifi = 'toast-error';
-    // }
+    this.service.doLogin(data);
   }
 
   async ngAfterViewInit() {

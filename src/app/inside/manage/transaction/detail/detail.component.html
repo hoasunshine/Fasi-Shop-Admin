@@ -1,0 +1,103 @@
+<!-- page title area start -->
+<div class="page-title-area">
+    <div class="row align-items-center">
+        <div class="col-sm-6">
+            <div class="breadcrumbs-area clearfix">
+                <ul class="breadcrumbs pull-left">
+                    <li><a href="/dashboard">Home</a></li>
+                    <li><a href="/transactions">Transaction</a></li>
+                    <li><span>Detail</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6 clearfix">
+            <div class="user-profile pull-right">
+                <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
+                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i>
+                </h4>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Message</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <a class="dropdown-item" href="#">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- page title area end -->
+<div class="main-content-inner">
+    <div class="row">
+        <div class="col-lg-12 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-area">
+                        <div class="invoice-head">
+                            <div class="row">
+                                <div class="iv-left col-6">
+                                    <span>INVOICE FROM: {{getSellerName(this.detail.sellerId)}}</span>
+                                </div>
+                                <div class="iv-right col-6 text-md-right">
+                                    <span>#{{this.id}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="invoice-address">
+                                    <h3>invoiced to</h3>
+                                    <h5>{{this.detail.accountName}}</h5>
+                                    <p>{{this.detail.shipPhone}}</p>
+                                    <p>{{this.detail.shipAddress}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-md-right">
+                                <ul class="invoice-date">
+                                    <li>Created Date : {{this.detail.createdAt | date:'yyyy | MM | dd - HH:mm:ss' : 'VI'}}</li>
+                                    <li>Updated Date : {{this.detail.updatedAt | date:'yyyy | MM | dd - HH:mm:ss' : 'VI'}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="invoice-table table-responsive mt-5">
+                            <table class="table table-bordered table-hover text-right">
+                                <thead>
+                                    <tr class="text-capitalize">
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th>Property</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of transactionDetail, let i = index">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{item.productName}}</td>
+                                        <td>{{item.property}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>${{item.productPrice}}</td>
+                                        <td>${{item.totalPrice}}</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">total balance :</td>
+                                        <td>${{this.detail.totalPrice}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">Status :</td>
+                                        <td>{{this.detail.status}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- <div class="invoice-buttons text-right">
+                        <a href="#" class="invoice-btn">print invoice</a>
+                        <a href="#" class="invoice-btn">send invoice</a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,8 @@ import { TransactionComponent } from './manage/transaction/transaction.component
 import { UserComponent } from './manage/user/user.component';
 import { MyProductsComponent } from './seller/my-products/my-products.component';
 import { MyTransactionsComponent } from './seller/my-transactions/my-transactions.component';
+import { ProductDetailComponent } from './manage/product/detail/detail.component';
+import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -20,31 +22,39 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
         path: 'categories',
-        component: CategoryComponent
+        component: CategoryComponent,
       },
       {
         path: 'category/create-edit',
-        component: CategoryCreateEditComponent
+        component: CategoryCreateEditComponent,
       },
       {
         path: 'products',
-        component: ProductComponent
+        component: ProductComponent,
       },
       {
         path: 'product/create-edit',
-        component: ProductCreateEditComponent
+        component: ProductCreateEditComponent,
+      },
+      {
+        path: 'product/detail',
+        component: ProductDetailComponent,
       },
       {
         path: 'transactions',
-        component: TransactionComponent
+        component: TransactionComponent,
+      },
+      {
+        path: 'transaction/detail',
+        component: TransactionDetailComponent,
       },
       {
         path: 'users',
-        component: UserComponent
+        component: UserComponent,
       },
       {
         path: 'hot-products',
