@@ -100,6 +100,10 @@ export class InsideService {
     return this.http.get(this.orderUrl);
   }
 
+  getTransactionDetail(id) {
+    return this.http.get(`${this.orderUrl}/${id}`);
+  }
+
   changeStatus(path, id) {
     return this.http.delete(`${this.orderUrl}/${path}/${id}`);
   }

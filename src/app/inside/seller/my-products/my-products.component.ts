@@ -27,6 +27,11 @@ export class MyProductsComponent implements OnInit {
       this.productList = data['data'].sort((a, b) => {
         return b.createdAt - a.createdAt;
       })
+      this.service.getHotProducts().subscribe(data1 => {
+        console.log(data);
+        console.log(data1);
+        
+      })
       this.productListPer = data['data'].sort((a, b) => {
         return b.createdAt - a.createdAt;
       })

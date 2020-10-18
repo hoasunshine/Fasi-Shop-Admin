@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>
-    (JSON.parse(localStorage.getItem('currentUser')));
+      (JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -29,19 +29,23 @@ export class AuthService {
     let body = new HttpParams();
     body = body.set('email', acc.email);
     body = body.set('password', acc.password);
-    return this.http.post(this.loginUrl, body).subscribe(data => {
+    this.http.post(this.loginUrl, body).subscribe(data => {
       // @ts-ignore
       this.user = data;
       console.log(this.user);
       localStorage.setItem('currentUser', JSON.stringify(this.user));
       localStorage.setItem('roleId', data['rolesList'][0]['roleId']);
       localStorage.setItem('id', data['accountId']);
-      this.router.navigate(['/dashboard']).then(() => {
-        window.location.reload();
-      });
-      alert('Login successfully!');
+      if (window.localStorage.getItem('currentUser') !== null){
+        console.log(window.localStorage.getItem('currentUser'));
+        this.router.navigate(['/dashboard']).then(() => {
+          window.location.reload();
+        });
+        alert('Login successfully!');
+      }
+      
     }, (error) => {
-      window.localStorage.setItem('role', 'none');
+      alert('Email not existed in user!');
       console.log(error);
     })
   }

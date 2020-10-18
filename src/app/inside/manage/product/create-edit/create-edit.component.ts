@@ -73,7 +73,7 @@ export class ProductCreateEditComponent implements OnInit {
     });
     this.service.getCategoryData().subscribe(data => {
       this.categoryData = data['data']['list'];
-    })
+    });
   }
 
   getDataUpdate() {

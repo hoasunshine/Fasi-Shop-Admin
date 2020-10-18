@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-detail',
   templateUrl: './detail.component.html',
 })
-export class DetailComponent implements OnInit {
+export class ProductDetailComponent implements OnInit {
 
   constructor() { }
 

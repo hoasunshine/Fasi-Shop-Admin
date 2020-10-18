@@ -12,11 +12,11 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { InsideRoutingModule } from './inside-routing.module';
 import { InsideComponent } from './inside.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { DetailComponent } from './manage/user/detail/detail.component';
 import { HotProductComponent } from './manage/hot-product/hot-product.component';
 import { MyTransactionsComponent } from './seller/my-transactions/my-transactions.component';
 import { MyProductsComponent } from './seller/my-products/my-products.component';
-
+import { ProductDetailComponent } from './manage/product/detail/detail.component';
+import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -28,10 +28,11 @@ import { MyProductsComponent } from './seller/my-products/my-products.component'
     UserComponent,
     CategoryCreateEditComponent,
     ProductCreateEditComponent,
-    DetailComponent,
     HotProductComponent,
     MyTransactionsComponent,
-    MyProductsComponent
+    MyProductsComponent,
+    ProductDetailComponent,
+    TransactionDetailComponent,
   ],
   exports:[
     InsideComponent
