@@ -30,12 +30,19 @@ export class AuthService {
     body = body.set('email', acc.email);
     body = body.set('password', acc.password);
     return this.http.post(this.loginUrl, body).subscribe(data => {
+      // @ts-ignore
       this.user = data;
-      window.localStorage.setItem('id', data['accountId']);
-      window.localStorage.setItem('email', data['email']);
-      window.localStorage.setItem('roleId', data['rolesList'][0].roleId);
+      console.log(this.user);
+      localStorage.setItem('currentUser', JSON.stringify(this.user));
+      localStorage.setItem('roleId', data['rolesList'][0]['roleId']);
+      localStorage.setItem('id', data['accountId']);
+      this.router.navigate(['/dashboard']).then(() => {
+        window.location.reload();
+      });
+      alert('Login successfully!');
     }, (error) => {
       window.localStorage.setItem('role', 'none');
+      console.log(error);
     })
   }
 }

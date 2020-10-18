@@ -124,7 +124,31 @@ export class MyProductsComponent implements OnInit {
   hotProductRequest(id) {
     const confirmed = confirm('Do you want to submit a request to put this product on hot product?')
     if (confirmed) {
-
+      const data = {
+        productId: id,
+        createdAt: new Date().getTime(),
+        updatedAt: new Date().getTime(),
+        deletedAt: 0,
+        status: 'Deactive',
+      }
+      this.service.createHotProduct(data).subscribe(
+        response => {
+          this.sttNotifi = true;
+          setTimeout( () => {
+            this.sttNotifi = false;
+          }, 5000)
+          this.textNotifi = 'Send request successfully!!!';
+          this.sttTextNotifi = 'toast-success';
+        },
+        error => {
+          this.sttNotifi = true;
+          setTimeout(() => {
+            this.sttNotifi = false;
+          }, 5000);
+          this.textNotifi = error.message;
+          this.sttTextNotifi = 'toast-error';
+        }
+      )
     }
   }
 

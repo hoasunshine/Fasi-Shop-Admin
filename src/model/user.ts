@@ -1,9 +1,18 @@
+import { Role } from './role';
+
 export class User {
-    email: string;
-    password: string;
-    roleId: string;
+    rolesList: Role[];
     address: string;
+    password: string;
     status: string;
-    accountName: string;
+    accountId: string;
+    email: string;
     phoneNumber: string;
+    gender: string;
+    accountName: string;
+    birthday: string;
+    updatedAt: string;
+    createdAt: string;
+    deletedAt: string;
+    token: string;
 }

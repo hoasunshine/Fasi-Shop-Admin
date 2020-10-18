@@ -21,7 +21,9 @@ export class HotProductComponent implements OnInit {
 
   getData() {
     this.service.getHotProducts().subscribe(data => {
-      this.hotProductList = data['data']['list'];
+      this.hotProductList = data['data']['list'].sort((a,b) => {
+        return b.createdAt - a.createdAt;
+      });
     })
     this.service.getAccountData().subscribe(data => {
       this.userList = data['data']['accountDTOList'];

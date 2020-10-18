@@ -110,6 +110,13 @@ export class InsideService {
     return this.http.get(this.hotProductUrl);
   }
 
+  createHotProduct(data) {
+    const obj = JSON.stringify(data);
+    return this.http.post(this.hotProductUrl, obj, {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
   activeHotProduct(id) {
     return this.http.put(`${this.hotProductUrl}/${id}`, {
       headers: {'Content-Type': 'application/json'}
