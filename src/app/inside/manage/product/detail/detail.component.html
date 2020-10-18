@@ -1,1 +1,82 @@
-
+<div id="formCreate">
+    <!-- page title area start -->
+    <div class="page-title-area">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="breadcrumbs-area clearfix">
+                    <ul class="breadcrumbs pull-left">
+                        <li><a href="/dashboard">Home</a></li>
+                        <li><a href="/products">Product</a></li>
+                        <li><span>Detail</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 clearfix">
+                <div class="user-profile pull-right">
+                    <div class="search-box pull-left">
+                        <form action="#">
+                            <div style="height: 40px;"> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page title area end -->
+    <div class="main-content-inner">
+        <div class="hasBottom">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="header-title">Information</h4>
+                    <span>More information about the product</span>
+                </div>
+                <div class="col-md-8">
+                    <div class="boxShadow">
+                        <form>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <input class="form-control" [value]="this.productData.category['categoryName']" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" [value]="this.productData.productName" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" cols="10" rows="5" [value]="this.productData.description" readonly></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input class="form-control" [value]="this.productData.productPrice" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input class="form-control" [value]="this.productData.totalProduct" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Thumbnail</label>
+                                <div class="display-thumbnail">
+                                    <img width="80%" src="{{this.productData.imageProduct}}" alt="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Image List</label>
+                                <div class="col-md-12 row">
+                                    <ngx-dropzone-preview *ngFor="let url of urls">
+                                        <ngx-dropzone-label>
+                                            <img width="90%" src="{{url}}" alt="">
+                                        </ngx-dropzone-label>
+                                    </ngx-dropzone-preview>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <input class="form-control" [value]="this.productData.status" readonly>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
