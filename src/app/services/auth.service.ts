@@ -43,7 +43,6 @@ export class AuthService {
         });
         alert('Login successfully!');
       }
-      
     }, (error) => {
       alert('Email not existed in user!');
       console.log(error);

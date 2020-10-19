@@ -17,6 +17,7 @@ import { MyTransactionsComponent } from './seller/my-transactions/my-transaction
 import { MyProductsComponent } from './seller/my-products/my-products.component';
 import { ProductDetailComponent } from './manage/product/detail/detail.component';
 import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
+import { UserDetailComponent } from './manage/user/detail/detail.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TransactionDetailComponent } from './manage/transaction/detail/detail.c
     MyProductsComponent,
     ProductDetailComponent,
     TransactionDetailComponent,
+    UserDetailComponent,
   ],
   exports:[
     InsideComponent

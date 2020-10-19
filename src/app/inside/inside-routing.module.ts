@@ -13,6 +13,7 @@ import { MyProductsComponent } from './seller/my-products/my-products.component'
 import { MyTransactionsComponent } from './seller/my-transactions/my-transactions.component';
 import { ProductDetailComponent } from './manage/product/detail/detail.component';
 import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
+import { UserDetailComponent } from './manage/user/detail/detail.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UserComponent,
+      },
+      {
+        path: 'user/detail',
+        component: UserDetailComponent,
       },
       {
         path: 'hot-products',
