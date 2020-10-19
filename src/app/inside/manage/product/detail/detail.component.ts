@@ -9,6 +9,7 @@ export class ProductDetailComponent implements OnInit {
 
   productData = {};
   urls = [];
+  userData = [];
   id: string;
   constructor(private service: InsideService) { }
 
@@ -27,8 +28,18 @@ export class ProductDetailComponent implements OnInit {
         this.urls.push(data['imageDTOS'][i].url);
       }
     })
+    this.service.getAccountData().subscribe(data => {
+      this.userData = data['data']['accountDTOList'];
+    })
   }
 
+  getSellerName(id) {
+    for (let i = 0; i < this.userData.length; i++) {
+      if (this.userData[i].accountId == id) {
+        return this.userData[i].accountName;
+      }
+    }
+  }
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');

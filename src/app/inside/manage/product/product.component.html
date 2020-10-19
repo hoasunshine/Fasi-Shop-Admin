@@ -51,7 +51,7 @@
                         <div class="user-profile pull-right">
                             <div class="dropdown ">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    
+
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="#">Action</a>
@@ -95,7 +95,8 @@
                                             <td>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</td>
                                             <td>{{item.productName}}</td>
                                             <td>{{item.category.categoryName}}</td>
-                                            <td>{{item.description}}</td>
+                                            <td>{{(item.description.length>10) ? (item.description | slice:0:50)+ '...' : (item.description)}}
+                                            </td>
                                             <td>${{item.productPrice}}</td>
                                             <td>{{item.totalProduct}}</td>
                                             <td>{{getSellerName(item.accountId)}}</td>

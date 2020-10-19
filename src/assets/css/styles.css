@@ -2957,3 +2957,15 @@ table.dataTable thead td {
     position: relative;
     background-image: linear-gradient(to top, #ededed, #efefef, #f1f1f1, #f4f4f4, #f6f6f6);
 }
+
+#formCreate .title-detail-form {
+    font-weight: 600;
+    color: #666;
+    display: inline-block;
+    margin-bottom: .5rem;
+    margin-top: 15px;
+}
+
+#formCreate .detail-value {
+    background-color: #e9ecef;
+}
