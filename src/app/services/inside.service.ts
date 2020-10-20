@@ -16,6 +16,7 @@ export class InsideService {
   private productAmountUrl = 'http://localhost:8080/warehouse';
   private productImageListUrl = 'http://localhost:8080/products/listImage';
   private hotProductUrl = 'http://localhost:8080/hotProducts';
+  private blogUrl = 'http://localhost:8080/blog';
 
   constructor(private http: HttpClient) { }
 
@@ -129,6 +130,30 @@ export class InsideService {
 
   deactiveHotProduct(id) {
     return this.http.delete(`${this.hotProductUrl}/${id}`);
+  }
+
+  // blog
+
+  getBlogDatas() {
+    return this.http.get(`${this.blogUrl}/getAll`);
+  }
+
+  getBlogDetail(id) {
+    return this.http.get(`${this.blogUrl}/${id}`);
+  }
+
+  createBlog(data) {
+    const obj = JSON.stringify(data);
+    return this.http.post(this.blogUrl, obj, {
+      headers: {'Content-Type': 'application/json'}
+    })
+  }
+
+  updateBlog(data, id) {
+    const obj = JSON.stringify(data);
+    return this.http.put(`${this.blogUrl}/${id}`, obj, {
+      headers: {'Content-Type': 'application/json'}
+    });
   }
 
 }
