@@ -18,6 +18,10 @@ import { MyProductsComponent } from './seller/my-products/my-products.component'
 import { ProductDetailComponent } from './manage/product/detail/detail.component';
 import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
 import { UserDetailComponent } from './manage/user/detail/detail.component';
+import { BlogComponent } from './manage/blog/blog.component';
+import { BlogCreateEditComponent } from './manage/blog/create-edit/create-edit.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 
 @NgModule({
   declarations: [
@@ -35,6 +39,8 @@ import { UserDetailComponent } from './manage/user/detail/detail.component';
     ProductDetailComponent,
     TransactionDetailComponent,
     UserDetailComponent,
+    BlogComponent,
+    BlogCreateEditComponent,
   ],
   exports:[
     InsideComponent
@@ -46,6 +52,7 @@ import { UserDetailComponent } from './manage/user/detail/detail.component';
     FormsModule,
     NgxDropzoneModule,
     NgxPaginationModule,
+    AngularEditorModule,
   ]
 })
 export class InsideModule { }

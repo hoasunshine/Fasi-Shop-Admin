@@ -1,23 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { InsideService } from 'src/app/services/inside.service';
+
 
 @Component({
   selector: 'app-create-edit',
   templateUrl: './create-edit.component.html',
 })
-export class CategoryCreateEditComponent implements OnInit {
+export class BlogCreateEditComponent implements OnInit {
 
-  formCreated: FormGroup;
-  id: string;
   sttAdd = true;
+  formCreated: FormGroup;
+  thumbnail: string;
+  downloadURLThumbnail: Observable<string>;
+  sttLoadingProgress = false;
+  progressValueThumbnail: Observable<number>;
   sttNotifi = false;
   sttTextNotifi = 'toast-success';
   sttLoading = false;
   textNotifi: string;
-  createdTime: number;
-
-  constructor(private fb: FormBuilder, private service: InsideService) { }
+  id: string;
+  createdTime: string;
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private service: InsideService) { }
 
   ngOnInit() {
     this.createForm();
@@ -26,10 +33,10 @@ export class CategoryCreateEditComponent implements OnInit {
 
   createForm() {
     this.formCreated = this.fb.group({
-      name: ['', Validators.required],
+      title: ['', Validators.required],
       description: ['', Validators.required],
       status: ['Active'],
-    });
+    })
   }
 
   getParameterByName(name, url) {
@@ -46,11 +53,12 @@ export class CategoryCreateEditComponent implements OnInit {
     var url = window.location.href;
     this.id = this.getParameterByName('id', url);
     if (this.id !== null && this.id !== undefined) {
-      this.service.getDetailCategory(this.id).subscribe(data => {        
+      this.service.getBlogDetail(this.id).subscribe(data => {        
         const objCreated = [];                
-        objCreated['name'] = data['data'].categoryName;
+        objCreated['title'] = data['data'].title;
         objCreated['description'] = data['data'].description;
         objCreated['status'] = data['data'].status;
+        this.thumbnail = data['data'].image;
         this.createdTime = data['data'].createdAt;
         this.formCreated = this.fb.group(objCreated);
         this.sttAdd = false;
@@ -58,30 +66,31 @@ export class CategoryCreateEditComponent implements OnInit {
     }
   }
 
-  createCategory() {
+  dismissToast() {
+    this.sttNotifi = false;
+  }
+
+  createBlog() {
     const data = {
-      categoryId: '',
-      categoryName: this.formCreated.value.name,
+      title: this.formCreated.value.title,
+      image: this.thumbnail,
       description: this.formCreated.value.description,
+      status: this.formCreated.value.status,
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
       deletedAt: 0,
-      status: this.formCreated.value.status,
     }
-    this.service.addCategory(data).subscribe(
+    this.service.createBlog(data).subscribe(
       response => {
-        this.sttLoading = false;
         this.sttNotifi = true;
         setTimeout( () => {
           this.sttNotifi = false;
         }, 5000);
         this.textNotifi = 'Created Successfully!';
         this.sttTextNotifi = 'toast-success';
-        window.location.href = '/categories';
-      },
-      error => {
+        window.location.href = '/blogs';
+      }, error => {
         console.log(error);
-        this.sttLoading = false;
         this.sttNotifi = true;
         setTimeout( () => {
           this.sttNotifi = false;
@@ -92,18 +101,18 @@ export class CategoryCreateEditComponent implements OnInit {
     )
   }
 
-  updateCategory() {
+  updateBlog() {
     this.sttLoading = true;
     const data = {
-      categoryId: '',
-      categoryName: this.formCreated.value.name,
+      title: this.formCreated.value.title,
+      image: this.thumbnail,
       description: this.formCreated.value.description,
+      status: this.formCreated.value.status,
       createdAt: this.createdTime,
       updatedAt: new Date().getTime(),
       deletedAt: 0,
-      status: this.formCreated.value.status,
     }
-    this.service.updateCategory(data, this.id).subscribe(
+    this.service.updateBlog(data, this.id).subscribe(
       response => {
         this.sttLoading = false;
         this.sttNotifi = true;
@@ -112,6 +121,7 @@ export class CategoryCreateEditComponent implements OnInit {
         }, 2000);
         this.textNotifi = 'Updated Successfully!';
         this.sttTextNotifi = 'toast-success';
+        window.location.href = '/blogs';
       },
       error => {
         console.log(error);
@@ -123,7 +133,26 @@ export class CategoryCreateEditComponent implements OnInit {
     )
   }
 
-  dismissToast() {
-    this.sttNotifi = false;
+  uploadThumbnail(event) {
+    var n = event.target.files[0].name;
+    const filePath = `RoomsImages/${n}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, event.target.files[0]);
+    this.sttLoadingProgress = true;
+    this.progressValueThumbnail = task.percentageChanges();
+    task.snapshotChanges().pipe(finalize(() => {
+      this.downloadURLThumbnail = fileRef.getDownloadURL();
+      this.downloadURLThumbnail.subscribe((url) => {
+        if (url) {
+          this.thumbnail = url;
+          this.sttLoadingProgress = false;
+        }
+      })
+    })).subscribe(url => {
+      if (url) {
+        console.log('url');
+      }
+    })
   }
+  
 }

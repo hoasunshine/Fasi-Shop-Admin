@@ -14,6 +14,8 @@ import { MyTransactionsComponent } from './seller/my-transactions/my-transaction
 import { ProductDetailComponent } from './manage/product/detail/detail.component';
 import { TransactionDetailComponent } from './manage/transaction/detail/detail.component';
 import { UserDetailComponent } from './manage/user/detail/detail.component';
+import { BlogComponent } from './manage/blog/blog.component';
+import { BlogCreateEditComponent } from './manage/blog/create-edit/create-edit.component';
 
 const routes: Routes = [
   {
@@ -73,6 +75,14 @@ const routes: Routes = [
         path: 'transaction-list',
         component: MyTransactionsComponent,
       },
+      {
+        path: 'blogs',
+        component: BlogComponent,
+      },
+      {
+        path: 'blog/create-edit',
+        component: BlogCreateEditComponent,
+      }
     ]
   }
 ];
