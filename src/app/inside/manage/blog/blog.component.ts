@@ -57,6 +57,31 @@ export class BlogComponent implements OnInit {
     }
   }
 
+  getStt(type) {
+    if (type === 'all') {
+      this.blogList = this.blogListPer;
+      return;
+    }
+    const arr = [];
+    const data = this.blogListPer;
+    for (let i = 0; i < data.length; i++) {       
+      if (data[i].status == type) {
+        arr.push(data[i]);
+      }
+    }
+    this.blogList = arr;  
+    if (this.blogList.length === 0) {
+      this.sttNotifi = true;
+      setTimeout(() => {
+        this.sttNotifi = false;
+      }, 5000);
+      this.textNotifi = 'No data!';
+      this.sttTextNotifi = 'toast-error';
+    } else {
+      this.sttNotifi = false;
+    }
+  }
+
   sortBy($event, type) {
     const checked = $event.target.classList.contains('ti-arrow-up');
     if (checked) {
