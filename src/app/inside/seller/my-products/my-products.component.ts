@@ -144,6 +144,7 @@ export class MyProductsComponent implements OnInit {
           }, 5000)
           this.textNotifi = 'Send request successfully!!!';
           this.sttTextNotifi = 'toast-success';
+          window.location.reload();
         },
         error => {
           this.sttNotifi = true;
