@@ -156,6 +156,8 @@ export class ProductCreateEditComponent implements OnInit {
     }
     this.datas.product = data;
     this.datas.totalProducts = this.formCreate.value.amount;
+    console.log(this.datas.totalProducts);
+    
     this.datas.imageList = this.images;
     this.service.updateProduct(this.datas, this.id).subscribe(
       response => {
@@ -166,7 +168,7 @@ export class ProductCreateEditComponent implements OnInit {
         }, 5000);
         this.textNotifi = 'Updated Successfully!';
         this.sttTextNotifi = 'toast-success';
-        window.location.href = '/products';
+        window.location.href = '/product-list';
       },
       error => {
         this.sttLoading = false;
