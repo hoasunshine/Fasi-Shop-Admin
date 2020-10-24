@@ -27,11 +27,6 @@ export class MyProductsComponent implements OnInit {
       this.productList = data['data'].sort((a, b) => {
         return b.createdAt - a.createdAt;
       })
-      this.service.getHotProducts().subscribe(data1 => {
-        console.log(data);
-        console.log(data1);
-        
-      })
       this.productListPer = data['data'].sort((a, b) => {
         return b.createdAt - a.createdAt;
       })
@@ -123,6 +118,31 @@ export class MyProductsComponent implements OnInit {
         break;
       default:
         break;
+    }
+  }
+
+  getStt(type) {
+    if (type === 'all') {
+      this.productList = this.productListPer;
+      return;
+    }
+    const arr = [];
+    const data = this.productListPer;
+    for (let i = 0; i < data.length; i++) {       
+      if (data[i].status == type) {
+        arr.push(data[i]);
+      }
+    }
+    this.productList = arr;  
+    if (this.productList.length === 0) {
+      this.sttNotifi = true;
+      setTimeout(() => {
+        this.sttNotifi = false;
+      }, 5000);
+      this.textNotifi = 'No data!';
+      this.sttTextNotifi = 'toast-error';
+    } else {
+      this.sttNotifi = false;
     }
   }
 

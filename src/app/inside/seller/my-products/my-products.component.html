@@ -48,14 +48,13 @@
                     </div>
                     <div class="col-sm-6 clearfix">
                         <div class="user-profile pull-right">
-                            <div class="dropdown ">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
+                            <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+                                Filter by status
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="getStt('all')">All</a>
+                                <a class="dropdown-item" (click)="getStt('Active')">Active</a>
+                                <a class="dropdown-item" (click)="getStt('Deactive')">Deactive</a>
                             </div>
                         </div>
                     </div>

@@ -44,7 +44,25 @@
                 </a>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">Blog Table</h4>
+                        <div class="row align-items-center">
+                            <div class="col-sm-6">
+                                <h4 class="header-title ">Blogs Table</h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="user-profile pull-right">
+                                    <div class="search-box pull-left">
+                                        <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+                                            Filter by status
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" (click)="getStt('all')">All</a>
+                                            <a class="dropdown-item" (click)="getStt('Active')">Active</a>
+                                            <a class="dropdown-item" (click)="getStt('Deactive')">Deactive</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="single-table">
                             <div class="table-responsive">
                                 <table class="table table-hover progress-table text-center">
