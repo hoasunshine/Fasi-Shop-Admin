@@ -1,0 +1,117 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
+<div id="formCreate">
+    <div class="page-title-area">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="breadcrumbs-area clearfix">
+                    <ul class="breadcrumbs pull-left">
+                        <li><a href="/dashboard">Home</a></li>
+                        <li><span>Hot Product</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 clearfix">
+                <div class="user-profile pull-right">
+                    <div class="search-box pull-left">
+                        <form action="#">
+                            <input type="text" name="search" placeholder="Search..." (input)="search($event.target.value)">
+                            <i class="ti-search"></i>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content-inner">
+        <div class="row">
+            <div class="col-12 mt-5">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+                                Filter by status
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="getStt('all')">All</a>
+                                <a class="dropdown-item" (click)="getStt('Active')">Active</a>
+                                <a class="dropdown-item" (click)="getStt('Deactive')">Deactive</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Hot Product Table</h4>
+                        <div class="single-table">
+                            <div class="table-responsive">
+                                <table class="table table-hover progress-table text-center">
+                                    <thead class="text-uppercase">
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Created At <i (click)="sortBy($event, 'timeCre')" class="ti-arrow-down"></i></th>
+                                            <th scope="col">Updated At <i (click)="sortBy($event, 'timeUp')" class="ti-arrow-down"></i></th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Seller</th>
+                                            <th scope="col">Price <i (click)="sortBy($event, 'price')" class="ti-arrow-down"></i></th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of hotProductList| paginate: { itemsPerPage: 20, currentPage: p, id: id}
+                                            , let i = index">
+                                            <th scope="row">{{i + 1}}</th>
+                                            <th>{{item.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</th>
+                                            <th>{{item.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</th>
+                                            <td>{{item.product.productName}}</td>
+                                            <td>{{item.product.category.categoryName}}</td>
+                                            <td>{{getSellerName(item.product.accountId)}}</td>
+                                            <td>${{item.product.productPrice}}</td>
+                                            <td><img width="40%" src="{{item.product.imageProduct}}" alt=""></td>
+                                            <td *ngIf="item.status==='Active'"><span class=" status-p bg-success">Active</span></td>
+                                            <td *ngIf="item.status==='Deactive'"><span class="status-p bg-danger">Deactive</span></td>
+                                            <td>
+                                                <ul class="d-flex justify-content-center">
+                                                    <li class="mr-3">
+                                                        <a class="text-secondary">
+                                                            <i [routerLink]="['/product/detail']" [queryParams]="{id: item.productId}" class="ti-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li *ngIf="item.status=='Active'">
+                                                        <a class="text-danger">
+                                                            <i (click)="deactiveHotProduct(item.hotProductId)" class="ti-trash"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li *ngIf="item.status=='Deactive'">
+                                                        <a class="text-success">
+                                                            <i (click)="activeHotProduct(item.hotProductId)" class="ti-check-box"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls maxSize="5" *ngIf="hotProductList.length > 1" style="text-align: right" [id]="id" (pageChange)="p = $event">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,12 @@
-<!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-<!-- preloader area start -->
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
 <div id="preloader">
     <div class="loader"></div>
 </div>
@@ -21,7 +26,7 @@
                         <i class="ti-email"></i>
                         <div *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty || loginForm.get('email').touched)" class="text-danger">
                             <div *ngIf="loginForm.get('email').errors.required">
-                                Đây là trường bắt buộc phải nhập.
+                                This is a required field.
                             </div>
                         </div>
                     </div>
@@ -31,7 +36,7 @@
                         <i class="ti-lock"></i>
                         <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched)" class="text-danger">
                             <div *ngIf="loginForm.get('password').errors.required">
-                                Đây là trường bắt buộc phải nhập.
+                                This is a required field.
                             </div>
                         </div>
                     </div>

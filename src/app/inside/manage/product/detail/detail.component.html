@@ -1,0 +1,146 @@
+<div id="formCreate">
+    <!-- page title area start -->
+    <div class="page-title-area">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="breadcrumbs-area clearfix">
+                    <ul class="breadcrumbs pull-left">
+                        <li><a href="/dashboard">Home</a></li>
+                        <li><a href="/products">Product</a></li>
+                        <li><span>Detail</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 clearfix">
+                <div class="user-profile pull-right">
+                    <div class="search-box pull-left">
+                        <form action="#">
+                            <div style="height: 40px;"> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page title area end -->
+    <div class="main-content-inner">
+        <div class="hasBottom">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="header-title">Information</h4>
+                    <span>More information about the product</span>
+                </div>
+                <div class="col-md-8">
+                    <div class="boxShadow">
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Seller: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{getSellerName(this.productData.accountId)}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Category: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.category['categoryName']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Name: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.productName}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Description: </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <textarea class="form-control detail-value" cols="10" rows="5" [value]="this.productData.description"></textarea>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Price: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">${{this.productData.productPrice}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Amount: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.totalProduct}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Thumbnail: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="display-thumbnail">
+                                        <img width="80%" src="{{this.productData.imageProduct}}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Image List: </div>
+                                </div>
+                                <div class="col-auto row">
+                                    <ngx-dropzone-preview *ngFor="let url of urls">
+                                        <ngx-dropzone-label>
+                                            <img width="90%" src="{{url}}" alt="">
+                                        </ngx-dropzone-label>
+                                    </ngx-dropzone-preview>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Status: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.status}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Hot Product Status: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.hotProductStatus}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Created At: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.createdAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</div>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-2">
+                                    <div class="title-detail-form">Updated At: </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control detail-value">{{this.productData.updatedAt | date:'yyyy/MM/dd - HH:mm:ss':'VI'}}</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

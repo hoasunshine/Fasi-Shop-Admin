@@ -1,26 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ApiAssService } from 'src/app/service/api-ass.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { error } from 'protractor';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private router: Router, private fb: FormBuilder, private service: ApiAssService) { }
+  sttAdd: boolean = true;
+  sttNotifi = false;
+  sttTextNotifi = 'toast-success';
+  sttLoading: boolean = false;
+  textNotifi: string;
+  returnUrl: string;
 
-  ngOnInit() {
+  constructor(private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private service: AuthService) {
+    // if (this.service.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
+  }
+
+  ngOnInit(){
     this.createForm();
   }
 
-  createForm () {
+  createForm() {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
+
+  dismissToast() {
+    this.sttNotifi = false;
   }
 
   doLogin() {

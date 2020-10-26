@@ -1,0 +1,125 @@
+<div *ngIf="sttNotifi" id="toast-container" class="toast-top-right">
+    <div class="alert alert-dismissible toast" [ngClass]="sttTextNotifi" aria-live="polite">
+        <button type="button" class="toast-close-button" role="button" (click)="dismissToast()">×</button>
+        <div class="toast-message">
+            {{textNotifi}}
+        </div>
+    </div>
+</div>
+
+<div id="formCreate">
+    <!-- page title area start -->
+    <div class="page-title-area">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <div class="breadcrumbs-area clearfix">
+                    <ul class="breadcrumbs pull-left">
+                        <li><a href="/dashboard">Home</a></li>
+                        <li><a href="/blogs">Blog</a></li>
+                        <li *ngIf="sttAdd"><span>Create</span></li>
+                        <li *ngIf="!sttAdd"><span>Update</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-6 clearfix">
+                <div class="user-profile pull-right">
+                    <div class="search-box pull-left">
+                        <form action="#">
+                            <div style="height: 40px;"> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page title area end -->
+    <div class="main-content-inner">
+        <div class="hasBottom">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="header-title">Information</h4>
+                    <span>More information about the blog</span>
+                </div>
+                <div class="col-md-8">
+                    <div class="boxShadow">
+                        <form [formGroup]="formCreated">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control" formControlName="title" required>
+                                <div *ngIf="formCreated.get('title').invalid && (formCreated.get('title').dirty || formCreated.get('title').touched)" class="text-danger">
+                                    <div *ngIf="formCreated.get('title').errors.required">
+                                        Content is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <angular-editor [placeholder]="'Enter text here...'" formControlName="description" [(ngModel)]="htmlContent">
+                                </angular-editor>
+                                <div *ngIf="formCreated.get('description').invalid && (formCreated.get('description').dirty || formCreated.get('description').touched)" class="text-danger">
+                                    <div *ngIf="formCreated.get('description').errors.required">
+                                        Content is required.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Thumbnail</label>
+                                <div class="btn-upload-thumbnail">
+                                    <input type="file" (change)="uploadThumbnail($event)" accept=".png,.jpg, .jpeg" class="upload-input">
+                                </div>
+                                <div *ngIf="sttLoadingProgress">
+                                    <div *ngIf="progressValueThumbnail | async as val">
+                                        <progress type="warning" [value]="val" style="height: 7mm; width: 50%" max="100"></progress>
+                                        <br />
+                                        <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}%
+                                        </span><span *ngIf="val == 100" style="color:rgb(1, 153, 34);  font-size: 17px; font-weight: 410;">Completed
+                                            !</span>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="this.thumbnail !== null && this.thumbnail !== undefined && this.thumbnail !== ''">
+                                    <div class="display-thumbnail">
+                                        <img width="80%" src="{{this.thumbnail}}" alt="">
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Status</label>
+                                <div class="row">
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="radio" id="active" name="status" value="Active" formControlName="status">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" readonly value="Active">
+                                    </div>
+                                    <div class="input-group col-md-6">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <input type="radio" id="deactive" name="status" value="Deactive" formControlName="status">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" readonly value="Deactive">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button *ngIf="sttAdd" type="submit" (click)="createBlog()" [disabled]="formCreated.invalid" class="btn btn-create-add">
+                                    <h4 class="button-name">
+                                        Create
+                                    </h4>
+                                </button>
+                                <button *ngIf="!sttAdd" type="submit" (click)="updateBlog()" [disabled]="formCreated.invalid" class="btn btn-create-add">
+                                    <h4 class="button-name">
+                                        Update
+                                    </h4>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

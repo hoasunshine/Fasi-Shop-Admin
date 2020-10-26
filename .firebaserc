@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "adminprojectsem4": {
+      "hosting": {
+        "AdminSunShop": [
+          "adminprojectsem4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "adminprojectsem4"
+  }
+}
